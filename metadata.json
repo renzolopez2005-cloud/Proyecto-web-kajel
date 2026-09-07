@@ -1,0 +1,6 @@
+{
+  "name": "Kajel Flores Amarillas",
+  "description": "Tienda online y arquitectura interactiva de venta para ramos y gift boxes de flores amarillas artesanales Kajel con preventa y pedidos por WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

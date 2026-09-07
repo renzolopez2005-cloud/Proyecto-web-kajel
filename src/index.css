@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Epilogue', sans-serif;
+  }
+}
+
+.font-headline {
+  font-family: 'Epilogue', sans-serif;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.custom-blueprint-bg {
+  background-color: #fdfbf7;
+  background-image: radial-gradient(#e7e2d7 0.75px, transparent 0.75px), radial-gradient(#e7e2d7 0.75px, #fdfbf7 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.node-connector-line {
+  background: linear-gradient(180deg, #d97706 0%, #f59e0b 100%);
+}
+
+/* Theme: Girasol Solar (Default) - Radiant Honey Amber, Sunflower Gold & Warm Ivory */
+
+/* Theme: Jardín Botánico - Emerald Green, Sunflower Yellow & Crisp Mint */
+[data-palette="botanico"] {
+  background-color: #f7faf7 !important;
+  color: #14351d !important;
+}
+[data-palette="botanico"] .custom-blueprint-bg {
+  background-color: #f7faf7 !important;
+  background-image: radial-gradient(#d3e2d3 0.75px, transparent 0.75px), radial-gradient(#d3e2d3 0.75px, #f7faf7 0.75px) !important;
+}
+[data-palette="botanico"] .node-connector-line {
+  background: linear-gradient(180deg, #15803d 0%, #eab308 100%) !important;
+}
+[data-palette="botanico"] .text-\[\#b45309\] { color: #15803d !important; }
+[data-palette="botanico"] .bg-\[\#b45309\] { background-color: #15803d !important; }
+[data-palette="botanico"] .hover\:bg-\[\#d97706\]:hover { background-color: #166534 !important; }
+[data-palette="botanico"] .border-\[\#b45309\] { border-color: #15803d !important; }
+[data-palette="botanico"] .bg-\[\#fdfbf7\] { background-color: #f7faf7 !important; }
+[data-palette="botanico"] .bg-\[\#fffbeb\] { background-color: #f0fdf4 !important; }
+[data-palette="botanico"] .bg-\[\#fef3c7\] { background-color: #dcfce7 !important; }
+[data-palette="botanico"] .text-\[\#451a03\] { color: #14532d !important; }
+[data-palette="botanico"] .border-\[\#e7e2d7\] { border-color: #d8e5d8 !important; }
+
+/* Theme: Romance Floral - Rose Quartz & Golden Sunflower */
+[data-palette="romance"] {
+  background-color: #fffafb !important;
+  color: #29181e !important;
+}
+[data-palette="romance"] .custom-blueprint-bg {
+  background-color: #fffafb !important;
+  background-image: radial-gradient(#edd4dc 0.75px, transparent 0.75px), radial-gradient(#edd4dc 0.75px, #fffafb 0.75px) !important;
+}
+[data-palette="romance"] .node-connector-line {
+  background: linear-gradient(180deg, #be185d 0%, #f59e0b 100%) !important;
+}
+[data-palette="romance"] .text-\[\#b45309\] { color: #be185d !important; }
+[data-palette="romance"] .bg-\[\#b45309\] { background-color: #be185d !important; }
+[data-palette="romance"] .hover\:bg-\[\#d97706\]:hover { background-color: #9d174d !important; }
+[data-palette="romance"] .border-\[\#b45309\] { border-color: #be185d !important; }
+[data-palette="romance"] .bg-\[\#fdfbf7\] { background-color: #fffafb !important; }
+[data-palette="romance"] .bg-\[\#fffbeb\] { background-color: #fff1f2 !important; }
+[data-palette="romance"] .bg-\[\#fef3c7\] { background-color: #fce7f3 !important; }
+[data-palette="romance"] .text-\[\#451a03\] { color: #831843 !important; }
+[data-palette="romance"] .border-\[\#e7e2d7\] { border-color: #f0dbe2 !important; }
+
+/* Theme: Noche Mágica - Obsidian Dark & Radiant Gold */
+[data-palette="noche"] {
+  background-color: #12100e !important;
+  color: #fafaf9 !important;
+}
+[data-palette="noche"] .custom-blueprint-bg {
+  background-color: #12100e !important;
+  background-image: radial-gradient(#2e2a25 0.75px, transparent 0.75px), radial-gradient(#2e2a25 0.75px, #12100e 0.75px) !important;
+}
+[data-palette="noche"] .node-connector-line {
+  background: linear-gradient(180deg, #f59e0b 0%, #fbbf24 100%) !important;
+}
+[data-palette="noche"] .bg-\[\#fdfbf7\] { background-color: #12100e !important; }
+[data-palette="noche"] .bg-white { background-color: #1c1917 !important; color: #f5f5f4 !important; }
+[data-palette="noche"] .bg-\[\#ffffff\]\/95 { background-color: rgba(28, 25, 23, 0.95) !important; }
+[data-palette="noche"] .bg-\[\#fffbeb\] { background-color: #24201c !important; }
+[data-palette="noche"] .bg-\[\#fef3c7\] { background-color: #332815 !important; color: #fef08a !important; }
+[data-palette="noche"] .text-\[\#1c1917\] { color: #fafaf9 !important; }
+[data-palette="noche"] .text-\[\#57534e\] { color: #d6d3d1 !important; }
+[data-palette="noche"] .text-\[\#78716c\] { color: #a8a29e !important; }
+[data-palette="noche"] .border-\[\#e7e2d7\] { border-color: #2d2722 !important; }
+[data-palette="noche"] .border-\[\#e7e2d7\]\/40 { border-color: rgba(45, 39, 34, 0.6) !important; }
+[data-palette="noche"] .border-\[\#e7e2d7\]\/30 { border-color: rgba(45, 39, 34, 0.4) !important; }
+[data-palette="noche"] .text-\[\#451a03\] { color: #fef08a !important; }
+
