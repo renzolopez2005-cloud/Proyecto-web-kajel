@@ -58,13 +58,6 @@ export const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({
     }
   }, [currentProduct]);
 
-  const handleSelectVariant = (variant: ProductVariant) => {
-    setSelectedVariant(variant);
-    if (variant.image) {
-      setActiveImage(variant.image);
-    }
-  };
-
   const handleAdd = () => {
     onAddToCart(currentProduct, selectedVariant, quantity, dedicationText);
     setShowToast(true);
@@ -192,43 +185,6 @@ export const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({
                 <span>+ Luces Hada & Bombones gratis</span>
               </div>
             </div>
-
-            {/* VARIANT SELECTOR IF AVAILABLE */}
-            {currentProduct.variants && currentProduct.variants.length > 0 && (
-              <div className="space-y-2">
-                <label className="block text-xs font-bold text-[#1c1917]">
-                  Selecciona la Versión del Peluche / Modelo:
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {currentProduct.variants.map((v) => {
-                    const isSelected = selectedVariant?.id === v.id;
-                    return (
-                      <div
-                        key={v.id}
-                        onClick={() => handleSelectVariant(v)}
-                        className={`p-3 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-3 ${
-                          isSelected
-                            ? 'border-[#b45309] bg-[#fdfbf7] shadow-2xs'
-                            : 'border-[#e7e2d7]/50 bg-white hover:border-[#b45309]/40'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="product_variant_option"
-                          checked={isSelected}
-                          onChange={() => handleSelectVariant(v)}
-                          className="text-[#b45309] focus:ring-[#b45309]"
-                        />
-                        <div>
-                          <span className="text-xs font-bold text-[#1c1917] block">{v.name}</span>
-                          <span className="text-[11px] text-[#57534e]">{v.description}</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
 
             {/* INCLUSIONS LIST */}
             <div className="space-y-2">
