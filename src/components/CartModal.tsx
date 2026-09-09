@@ -242,7 +242,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                       >
                         {LIMA_DISTRICTS.map((d) => (
                           <option key={d.name} value={d.name}>
-                            {d.name} (+S/{d.fee.toFixed(0)})
+                            {d.name} (+S/ {d.fee.toFixed(2)})
                           </option>
                         ))}
                       </select>

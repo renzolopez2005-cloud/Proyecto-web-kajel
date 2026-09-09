@@ -247,6 +247,7 @@ export const LIMA_DISTRICTS: LimaDistrictOption[] = [
   { name: 'San Juan de Lurigancho', zone: 'Lima Este', fee: 2.5, estimatedHours: 'Entrega programada' },
   { name: 'Ate / Vitarte', zone: 'Lima Este', fee: 2.5, estimatedHours: 'Entrega programada' },
   { name: 'Comas', zone: 'Lima Norte', fee: 2.5, estimatedHours: 'Entrega programada' },
+  { name: 'Carabayllo (Carabayork)', zone: 'Lima Norte', fee: 2.5, estimatedHours: 'Entrega programada' },
   { name: 'Callao / Bellavista', zone: 'Prov. Constitucional', fee: 2.5, estimatedHours: 'Entrega programada' },
 ];
 
