@@ -1,17 +1,40 @@
 @import "tailwindcss";
 
+@theme {
+  --color-kajel-amber: #b45309;
+  --color-kajel-amber-dark: #92400e;
+  --color-kajel-amber-hover: #78350f;
+  --color-kajel-gold: #f59e0b;
+  --color-kajel-yellow: #fef08a;
+  --color-kajel-cream: #fffbeb;
+  --color-kajel-warm: #fef3c7;
+  --color-kajel-sand: #fdfbf7;
+  --color-kajel-border: #e7e2d7;
+  --color-kajel-brown: #451a03;
+  --color-kajel-dark: #1c1917;
+  --color-kajel-muted: #57534e;
+
+  --font-headline: 'Playfair Display', 'Epilogue', serif;
+  --font-handwriting: 'Caveat', cursive;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Playfair Display', 'Epilogue', serif;
   }
 }
 
 .font-headline {
-  font-family: 'Epilogue', sans-serif;
+  font-family: 'Playfair Display', 'Epilogue', serif;
+}
+
+.font-handwriting {
+  font-family: 'Caveat', cursive;
 }
 
 .font-body {

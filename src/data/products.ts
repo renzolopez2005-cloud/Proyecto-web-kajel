@@ -28,6 +28,7 @@ export const IMAGES = {
 
   galleryCarneritaFull: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCrxhvTdLvt3iCy440mV3qRXuU6Kulp_icVuiMcmrDNj7LbkBxOT99cSqDb3U5GwA6lyeXKbldRLyPZIbbS47znX60cSB0XIimvOJ_JMRXAKRWxp2EllYJ8k8crp6t8pNiUbK3iEGJ_C6plbnf9TjsADTU1BA3FZU5M9qEFD8iWUYm-aC1HLQMAoHuWyILpk25VTZ8gSZbVOjLySYaBivMucSk5_tDj0xbddkcL8n1ih8JRysbecgpY1DQU2hEo0s65',
   galleryCarneritaThumb: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAML6qglR1yiSTPN625AWxiWvOFIkEkb-EAoSPv7aLdFduwRiLLiOzN83MlPEMuJKbRTTnDcyVN6xTmGikEP0X-75BaSWqE1JSg9c-IB5kGEhxisKeI6Xc2rVjI2vu-QFTUwRcwnTOiEZ1lj613w9NHYQa_o_kca_8PL6j7zxSNmbfEnEQOU3BAIIEV8F-tcwUU8Ry60rPBqG6SSeAxViCFsu5uf5T7gkTPK6Gvnp8w3IWtnaJNb6m7pBctxtCaFeLu',
+  ramoGirasol: '/images/ramo-girasol.jpg',
 };
 
 export const PRODUCTS: Product[] = [
@@ -41,9 +42,9 @@ export const PRODUCTS: Product[] = [
     discountLabel: 'Ahorra 13%',
     tag: 'Opción Accesible',
     tagColor: 'bg-[#fef3c7] text-[#1c1917]',
-    image: IMAGES.patitaHero,
+    image: IMAGES.ramoGirasol,
     gallery: [
-      { url: IMAGES.patitaHero, label: 'Ramo Individual', thumb: IMAGES.galleryV1Thumb },
+      { url: IMAGES.ramoGirasol, label: 'Ramo Girasol Chenille con Tarjeta', thumb: IMAGES.ramoGirasol },
       { url: IMAGES.carneritaTop, label: 'Detalle Girasol', thumb: IMAGES.galleryCarneritaThumb }
     ],
     description: 'Ramo individual artesanal elaborado a mano con pétalos de chenille aterciopelado, follaje decorativo verde, margaritas silvestres y cinta decorativa con mensaje especial. El detalle perfecto para no dejar pasar el día de las flores amarillas.',
@@ -188,7 +189,7 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const PRESET_DEDICATIONS = [
-  'Ella sabía que él sabía que vendría a buscarla con sus flores amarillas...',
+  'Ella sabía que él sabía que algún día pasaría que vendría a buscarla con sus Flores Amarillas',
   'Flores eternas para un amor que florece todos los días. ¡Te amo!',
   'Un recordatorio de lo especial que eres para mí hoy y siempre 🌻💛',
   'Por miles de momentos felices juntos. ¡Feliz día de las flores amarillas!'

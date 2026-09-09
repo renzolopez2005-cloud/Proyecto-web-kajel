@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
-import { PRODUCTS, IMAGES, WHATSAPP_PHONE, WHATSAPP_DISPLAY, INSTAGRAM_HANDLE } from '../data/products';
+import { PRODUCTS, IMAGES, WHATSAPP_PHONE, WHATSAPP_DISPLAY } from '../data/products';
 import { 
-  Sun, 
-  Sparkles, 
-  Heart, 
   Truck, 
-  Gift, 
   MessageCircle, 
   ArrowRight, 
-  CheckCircle2, 
   Star, 
   ShieldCheck, 
   Calendar, 
-  Clock 
+  Clock,
+  Sparkles
 } from 'lucide-react';
+import { 
+  ChenilleSunflowerIcon, 
+  HandcraftedHeartIcon, 
+  YarnChenilleIcon, 
+  FairyLightsIcon, 
+  ArtisanGiftBoxIcon 
+} from './CraftIcons';
 
 interface HomeScreenProps {
   onSelectProduct: (product: Product) => void;
@@ -22,162 +25,267 @@ interface HomeScreenProps {
   onAddToCart: (product: Product) => void;
 }
 
+interface CountdownTime {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  isExpired: boolean;
+}
+
+/**
+ * Calculates time remaining until the campaign deadline
+ * Defaults to September 21 (Día de las Flores Amarillas) at 23:59:59
+ */
+const getCampaignDeadline = (): Date => {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  let target = new Date(currentYear, 8, 21, 23, 59, 59); // 21 de Septiembre
+  if (now.getTime() > target.getTime()) {
+    // If passed this year, roll over to the next campaign cycle
+    target = new Date(currentYear + 1, 8, 21, 23, 59, 59);
+  }
+  return target;
+};
+
+const calculateTimeLeft = (target: Date): CountdownTime => {
+  const diff = target.getTime() - new Date().getTime();
+  if (diff <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: true };
+  }
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / 1000 / 60) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+    isExpired: false,
+  };
+};
+
 export const HomeScreen: React.FC<HomeScreenProps> = ({
   onSelectProduct,
   onNavigateCatalog,
   onAddToCart,
 }) => {
+  // Real-time functional countdown
+  const [timeLeft, setTimeLeft] = useState<CountdownTime>(() => 
+    calculateTimeLeft(getCampaignDeadline())
+  );
+
+  useEffect(() => {
+    const target = getCampaignDeadline();
+    const interval = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(target));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Dynamic calculations from real product catalog
+  const totalProducts = PRODUCTS.length;
+  const maxSavings = Math.max(...PRODUCTS.map((p) => Math.max(0, p.normalPrice - p.price)));
+
+  // Safe references for hero mosaic
+  const heroProd1 = PRODUCTS[1] || PRODUCTS[0];
+  const heroProd2 = PRODUCTS[2] || PRODUCTS[0];
+  const heroProd3 = PRODUCTS[0]; // Ramo Girasol artesanal con nueva imagen real
+
   return (
     <div className="space-y-12 pb-12">
       {/* Top Presale Ribbon */}
-      <div className="bg-[#b45309] text-white py-2 px-4 text-center text-xs font-semibold flex items-center justify-center gap-2">
-        <Sun className="w-4 h-4 text-[#f59e0b] fill-[#f59e0b] animate-spin" style={{ animationDuration: '8s' }} />
-        <span>¡Preventa Oficial Flores Amarillas 2025! Asegura tu entrega con Luces Hada & Bombones Bon o bon gratis.</span>
+      <aside aria-label="Aviso de preventa" className="bg-kajel-amber text-white py-2 px-4 text-center text-xs font-semibold flex items-center justify-center gap-2 shadow-xs">
+        <ChenilleSunflowerIcon className="w-4 h-4 animate-spin" style={{ animationDuration: '14s' }} />
+        <span>
+          ¡Preventa Flores Amarillas! Asegura tu entrega en Lima con Luces Hada & Bombones Bon o bon gratis.
+        </span>
         <button 
+          type="button"
           onClick={onNavigateCatalog}
-          className="underline font-bold text-[#fde68a] hover:text-white ml-2"
+          className="underline font-bold text-kajel-yellow hover:text-white transition-colors ml-1 focus-visible:outline-2 focus-visible:outline-white"
         >
           Ver Promos &rarr;
         </button>
-      </div>
+      </aside>
 
       {/* HERO SECTION */}
       <section className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="rounded-2xl bg-gradient-to-br from-[#fffbeb] via-white to-[#fef3c7]/60 p-6 md:p-12 border border-[#e7e2d7]/30 shadow-sm relative overflow-hidden">
-          {/* Subtle floral background glow */}
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#f59e0b]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="rounded-3xl rounded-tr-[2.5rem] bg-gradient-to-br from-kajel-cream via-white to-kajel-warm/50 p-6 md:p-12 border border-kajel-border/50 shadow-sm relative overflow-hidden">
+          {/* Subtle warm floral background glow */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-kajel-gold/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-kajel-yellow/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
-                <Sun className="w-4 h-4 text-[#b45309]" />
-                <span>Tradición Flores Amarillas • Amor Eterno</span>
+              {/* Handwritten romantic eyebrow badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-kajel-yellow/80 border border-amber-300/50 text-kajel-brown text-xs font-bold shadow-2xs">
+                <ChenilleSunflowerIcon className="w-4 h-4" />
+                <span className="font-handwriting text-base font-bold text-kajel-brown">Tradición del 21 de Septiembre</span>
+                <span className="text-[11px] text-kajel-muted">• Ramos Eternos</span>
               </div>
 
-              <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl text-[#1c1917] font-extrabold tracking-tight leading-tight">
-                “Ella sabía que él sabía que algún día pasaría que vendría a buscarla con sus{' '}
-                <span className="text-[#b45309] underline decoration-[#f59e0b] decoration-wavy">
-                  Flores Amarillas
-                </span>”
+              {/* Direct, clear & romantic headline */}
+              <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl text-kajel-dark font-bold tracking-tight leading-tight">
+                Flores Amarillas que nunca se marchitan:{' '}
+                <span className="text-kajel-amber underline decoration-kajel-gold decoration-wavy underline-offset-4">
+                  el detalle tejido a mano
+                </span>{' '}
+                para quien más amas
               </h1>
 
-              <p className="font-body text-sm md:text-base text-[#57534e] max-w-xl leading-relaxed">
-                Sorprende con ramos y gift boxes de girasoles eternos tejidos con amor, luces de hada, peluches nupciales exclusivos y joyas giratorias.{' '}
-                <strong className="text-[#1c1917]">
-                  Reserva hoy en Preventa y asegura tu entrega con bombones gratis.
+              {/* Human, warm & specific subtitle */}
+              <p className="font-body text-sm md:text-base text-kajel-muted max-w-xl leading-relaxed">
+                Sorprende este 21 de Septiembre con ramos y gift boxes de girasoles eternos elaborados minuciosamente en suave chenille aterciopelado. Cada arreglo incluye luces de hada, peluches nupciales exclusivos o joyas giratorias antiestrés.{' '}
+                <strong className="text-kajel-dark font-semibold">
+                  Reserva hoy en Preventa y asegura tu entrega a domicilio en Lima con bombones de cortesía.
                 </strong>
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              {/* Action Buttons with distinct hover feedback */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
+                  type="button"
                   onClick={onNavigateCatalog}
-                  className="px-6 py-3.5 rounded-xl bg-[#b45309] hover:bg-[#d97706] text-white font-headline text-sm font-bold shadow-md transition-all flex items-center gap-2"
+                  className="px-6 py-3.5 rounded-2xl bg-kajel-amber hover:bg-kajel-amber-dark active:bg-kajel-amber-hover text-white font-headline text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2.5 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-kajel-amber focus-visible:outline-offset-2"
                 >
-                  <Gift className="w-4 h-4" />
+                  <ArtisanGiftBoxIcon className="w-4 h-4 text-kajel-yellow" />
                   <span>Ver Colección Preventa</span>
                 </button>
 
                 <a
-                  className="px-6 py-3.5 rounded-xl bg-[#fef3c7] hover:bg-[#fef3c7] text-[#1c1917] font-headline text-sm font-bold border border-[#e7e2d7]/50 transition-all flex items-center gap-2 shadow-xs"
-                  href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola Kajel! Deseo información sobre los ramos de flores amarillas.')}`}
+                  href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('¡Hola Kajel! Deseo reservar mi pedido de Flores Amarillas para este 21 de Septiembre.')}`}
                   target="_blank"
                   rel="noreferrer"
+                  className="px-6 py-3.5 rounded-2xl bg-kajel-warm hover:bg-amber-200 active:bg-amber-300 text-kajel-dark hover:text-kajel-brown font-headline text-sm font-bold border border-amber-300/70 hover:border-kajel-amber transition-all duration-200 flex items-center gap-2.5 shadow-2xs active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-kajel-amber focus-visible:outline-offset-2"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#b45309]" />
+                  <MessageCircle className="w-4 h-4 text-kajel-amber" />
                   <span>Pedir por WhatsApp ({WHATSAPP_DISPLAY})</span>
                 </a>
               </div>
 
-              {/* Trust badges */}
-              <div className="grid grid-cols-3 gap-3 pt-6 border-t border-[#e7e2d7]/30">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#fef3c7] flex items-center justify-center text-[#b45309] flex-shrink-0">
-                    <Heart className="w-4 h-4 fill-[#b45309]" />
+              {/* Handcrafted trust badges with custom craft icons */}
+              <div className="grid grid-cols-3 gap-3 pt-6 border-t border-kajel-border/60">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-kajel-warm flex items-center justify-center text-kajel-amber flex-shrink-0 border border-amber-200/60 shadow-2xs">
+                    <YarnChenilleIcon className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-bold text-xs text-[#1c1917] block">100% Artesanal</span>
-                    <span className="text-[10px] text-[#57534e]">Chenille premium eterno</span>
+                    <span className="font-bold text-xs text-kajel-dark block">100% Chenille</span>
+                    <span className="text-[11px] text-kajel-muted">Tejido a mano eterno</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#fef3c7] flex items-center justify-center text-[#b45309] flex-shrink-0">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-kajel-warm flex items-center justify-center text-kajel-amber flex-shrink-0 border border-amber-200/60 shadow-2xs">
                     <Truck className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-bold text-xs text-[#1c1917] block">Todo Lima</span>
-                    <span className="text-[10px] text-[#57534e]">Envíos programados</span>
+                    <span className="font-bold text-xs text-kajel-dark block">Todo Lima</span>
+                    <span className="text-[11px] text-kajel-muted">Envíos programados</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#fef3c7] flex items-center justify-center text-[#b45309] flex-shrink-0">
-                    <Gift className="w-4 h-4" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-kajel-warm flex items-center justify-center text-kajel-amber flex-shrink-0 border border-amber-200/60 shadow-2xs">
+                    <FairyLightsIcon className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="font-bold text-xs text-[#1c1917] block">Tarjeta & Regalos</span>
-                    <span className="text-[10px] text-[#57534e]">Luces hada + Bon o bon</span>
+                    <span className="font-bold text-xs text-kajel-dark block">Pack Completo</span>
+                    <span className="text-[11px] text-kajel-muted">Luces + Bon o bon</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* HERO PHOTOS MOSAIC */}
+            {/* HERO PHOTOS MOSAIC (Accessible, interactive & styled with craft borders) */}
             <div className="lg:col-span-5 grid grid-cols-2 gap-3">
               <div className="space-y-3">
                 <div 
-                  onClick={() => onSelectProduct(PRODUCTS[1])}
-                  className="relative rounded-xl overflow-hidden shadow-md group cursor-pointer border border-[#e7e2d7]/30"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Ver detalles de ${heroProd1.name}`}
+                  onClick={() => onSelectProduct(heroProd1)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectProduct(heroProd1);
+                    }
+                  }}
+                  className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-kajel-border/60 focus-visible:outline-2 focus-visible:outline-kajel-amber focus-visible:outline-offset-2 transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   <img
-                    alt="Gift Flores Amarillas con Carnerita"
+                    alt={heroProd1.name}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    src={IMAGES.carneritaTop}
+                    src={heroProd1.image}
+                    loading="eager"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-sm p-1.5 rounded-lg text-center shadow-xs">
-                    <span className="text-[11px] font-bold text-[#b45309] block">Pack Carnerita</span>
-                    <span className="text-xs font-bold text-[#1c1917]">S/ 39.90</span>
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-xs p-1.5 rounded-xl text-center shadow-xs border border-amber-100">
+                    <span className="text-[11px] font-bold text-kajel-amber block truncate">{heroProd1.name}</span>
+                    <span className="text-xs font-bold text-kajel-dark">S/ {heroProd1.price.toFixed(2)}</span>
                   </div>
                 </div>
 
                 <div 
-                  onClick={() => onSelectProduct(PRODUCTS[3])}
-                  className="relative rounded-xl overflow-hidden shadow-md group cursor-pointer border border-[#e7e2d7]/30"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Ver detalles de ${heroProd2.name}`}
+                  onClick={() => onSelectProduct(heroProd2)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectProduct(heroProd2);
+                    }
+                  }}
+                  className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-kajel-border/60 focus-visible:outline-2 focus-visible:outline-kajel-amber focus-visible:outline-offset-2 transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   <img
-                    alt="Gift Box Versión 2 Pollita Novia"
+                    alt={heroProd2.name}
                     className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                    src={IMAGES.pollitaHero}
+                    src={heroProd2.image}
+                    loading="eager"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute top-2 right-2 bg-[#f59e0b] text-[#451a03] text-[10px] px-2.5 py-0.5 rounded-full font-bold shadow-xs">
-                    Preventa
+                  <div className="absolute top-2 right-2 bg-kajel-gold text-kajel-brown text-[10px] px-2.5 py-0.5 rounded-full font-bold shadow-xs">
+                    Preventa Activa
+                  </div>
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-xs p-1.5 rounded-xl text-center shadow-xs border border-amber-100">
+                    <span className="text-[11px] font-bold text-kajel-amber block truncate">{heroProd2.name}</span>
+                    <span className="text-xs font-bold text-kajel-dark">S/ {heroProd2.price.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-3 pt-4">
                 <div 
-                  onClick={() => onSelectProduct(PRODUCTS[2])}
-                  className="relative rounded-xl overflow-hidden shadow-md group cursor-pointer border border-[#e7e2d7]/30"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Ver detalles de ${heroProd3.name}`}
+                  onClick={() => onSelectProduct(heroProd3)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectProduct(heroProd3);
+                    }
+                  }}
+                  className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-kajel-border/60 focus-visible:outline-2 focus-visible:outline-kajel-amber focus-visible:outline-offset-2 transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   <img
-                    alt="Gift Box Versión 1 Patita Novia"
+                    alt={heroProd3.name}
                     className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                    src={IMAGES.patitaHero}
+                    src={heroProd3.image}
+                    loading="eager"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-sm p-1.5 rounded-lg text-center shadow-xs">
-                    <span className="text-[11px] font-bold text-[#b45309] block">Gift Box Joyas + Patita</span>
-                    <span className="text-xs font-bold text-[#b45309]">S/ 59.90</span>
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-xs p-1.5 rounded-xl text-center shadow-xs border border-amber-100">
+                    <span className="text-[11px] font-bold text-kajel-amber block truncate">{heroProd3.name}</span>
+                    <span className="text-xs font-bold text-kajel-amber">S/ {heroProd3.price.toFixed(2)}</span>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#fef08a] rounded-xl text-center space-y-1 shadow-xs border border-[#e7e2d7]/30">
-                  <Gift className="w-5 h-5 text-[#b45309] mx-auto" />
-                  <p className="text-xs font-bold text-[#451a03]">Luces Hada de Regalo</p>
-                  <p className="text-[10px] text-[#78350f] leading-tight">En todos los pedidos de preventa</p>
+                {/* Handcrafted ribbon card highlight */}
+                <div className="p-3.5 bg-kajel-yellow/70 rounded-2xl text-center space-y-1 shadow-2xs border border-amber-300/40 relative">
+                  <FairyLightsIcon className="w-5 h-5 text-kajel-amber mx-auto" />
+                  <p className="text-xs font-bold text-kajel-brown">Luces Hada de Regalo</p>
+                  <p className="text-[10px] text-kajel-muted leading-tight font-medium">Instaladas en tu pack de preventa</p>
                 </div>
               </div>
             </div>
@@ -185,35 +293,74 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </section>
 
-      {/* COUNTDOWN & MOTIVATION CALLOUT */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="bg-[#fffbeb] border border-[#e7e2d7]/40 rounded-xl p-5 md:p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* REAL-TIME FUNCTIONAL COUNTDOWN & CAMPAIGN MOTIVATION */}
+      <section aria-label="Cuenta regresiva de la campaña" className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="bg-gradient-to-r from-kajel-cream via-[#fffdfa] to-kajel-warm/40 border border-kajel-border/70 rounded-2xl p-5 md:p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xs">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-[#f59e0b] text-[#451a03] flex items-center justify-center flex-shrink-0 shadow-sm">
-              <Calendar className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-2xl bg-kajel-amber text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+              <Calendar className="w-6 h-6 text-kajel-yellow" />
             </div>
             <div>
-              <h3 className="font-headline text-base md:text-lg font-bold text-[#1c1917]">
-                Campaña Oficial de Septiembre — Flores Amarillas
-              </h3>
-              <p className="text-xs md:text-sm text-[#57534e]">
-                Evita las alzas de último momento y la escasez. Asegura hoy con tu adelanto y programa la entrega a domicilio en Lima.
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-kajel-amber">
+                  Campaña Oficial 21 de Septiembre
+                </span>
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              </div>
+              <h2 className="font-headline text-base md:text-lg font-bold text-kajel-dark">
+                Asegura tu ramo artesanal antes de que se agoten los cupos
+              </h2>
+              <p className="text-xs md:text-sm text-kajel-muted">
+                El tejido en chenille toma horas de confección artesanal. Reserva con anticipación y programa tu envío puntual en Lima.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="bg-white px-3 py-2 rounded-lg text-center border border-[#e7e2d7]/30 shadow-2xs">
-              <span className="font-headline text-lg font-bold text-[#b45309]">100%</span>
-              <span className="block text-[10px] text-[#57534e]">Eternas</span>
+          <div className="flex flex-wrap items-center justify-center gap-3 flex-shrink-0">
+            {/* Live Countdown Clock */}
+            <div className="flex items-center gap-1.5 bg-white px-3 py-2 rounded-xl border border-kajel-border/60 shadow-2xs">
+              <div className="text-center min-w-[34px]">
+                <span className="font-headline text-base md:text-lg font-bold text-kajel-dark block leading-none">
+                  {String(timeLeft.days).padStart(2, '0')}
+                </span>
+                <span className="text-[9px] text-kajel-muted uppercase font-bold">Días</span>
+              </div>
+              <span className="text-kajel-amber font-bold text-xs">:</span>
+              <div className="text-center min-w-[34px]">
+                <span className="font-headline text-base md:text-lg font-bold text-kajel-dark block leading-none">
+                  {String(timeLeft.hours).padStart(2, '0')}
+                </span>
+                <span className="text-[9px] text-kajel-muted uppercase font-bold">Horas</span>
+              </div>
+              <span className="text-kajel-amber font-bold text-xs">:</span>
+              <div className="text-center min-w-[34px]">
+                <span className="font-headline text-base md:text-lg font-bold text-kajel-dark block leading-none">
+                  {String(timeLeft.minutes).padStart(2, '0')}
+                </span>
+                <span className="text-[9px] text-kajel-muted uppercase font-bold">Min</span>
+              </div>
+              <span className="text-kajel-amber font-bold text-xs">:</span>
+              <div className="text-center min-w-[34px]">
+                <span className="font-headline text-base md:text-lg font-bold text-kajel-amber block leading-none">
+                  {String(timeLeft.seconds).padStart(2, '0')}
+                </span>
+                <span className="text-[9px] text-kajel-amber uppercase font-bold">Seg</span>
+              </div>
             </div>
-            <div className="bg-white px-3 py-2 rounded-lg text-center border border-[#e7e2d7]/30 shadow-2xs">
-              <span className="font-headline text-lg font-bold text-[#b45309]">S/ 8.00</span>
-              <span className="block text-[10px] text-[#57534e]">Ahorro preventa</span>
+
+            {/* Dynamic Calculated Savings Metric */}
+            <div className="bg-white px-3 py-2 rounded-xl text-center border border-kajel-border/60 shadow-2xs min-w-[90px]">
+              <span className="font-headline text-base md:text-lg font-bold text-kajel-amber block leading-none">
+                S/ {maxSavings.toFixed(2)}
+              </span>
+              <span className="block text-[10px] text-kajel-muted font-medium">Ahorro preventa</span>
             </div>
+
+            {/* Booking Action Button */}
             <button
+              type="button"
               onClick={onNavigateCatalog}
-              className="px-4 py-2.5 bg-[#b45309] hover:bg-[#d97706] text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
+              className="px-5 py-2.5 bg-kajel-amber hover:bg-kajel-amber-dark active:bg-kajel-amber-hover text-white rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition-all active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-kajel-amber"
             >
               Reservar Ahora
             </button>
@@ -225,152 +372,188 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       <section className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
         <div className="flex items-end justify-between">
           <div>
-            <span className="text-xs uppercase font-bold text-[#b45309] tracking-wider block">
-              Catálogo Seleccionado
-            </span>
-            <h2 className="font-headline text-2xl font-bold text-[#1c1917]">
+            <div className="flex items-center gap-1.5 text-kajel-amber font-bold text-xs uppercase tracking-wider">
+              <ChenilleSunflowerIcon className="w-3.5 h-3.5" />
+              <span>Catálogo Seleccionado</span>
+            </div>
+            <h2 className="font-headline text-2xl md:text-3xl font-bold text-kajel-dark">
               Colección Preventa Flores Amarillas
             </h2>
           </div>
+          {/* Dynamic product count link */}
           <button
+            type="button"
             onClick={onNavigateCatalog}
-            className="text-xs font-bold text-[#b45309] hover:text-[#d97706] flex items-center gap-1"
+            className="text-xs font-bold text-kajel-amber hover:text-kajel-amber-dark flex items-center gap-1 transition-colors group focus-visible:outline-2 focus-visible:outline-kajel-amber"
           >
-            <span>Ver los 4 productos</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Ver los {totalProducts} productos</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
 
+        {/* Product Cards with Organic Subtle Shapes & High Contrast Tactile Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {PRODUCTS.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-xl border border-[#e7e2d7]/30 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
-            >
-              <div>
-                <div 
-                  onClick={() => onSelectProduct(product)}
-                  className="relative h-52 bg-[#fffbeb] overflow-hidden cursor-pointer"
-                >
-                  <img
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    src={product.image}
-                    referrerPolicy="no-referrer"
-                  />
-                  {product.tag && (
-                    <span className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${product.tagColor || 'bg-[#b45309] text-white'}`}>
-                      {product.tag}
-                    </span>
-                  )}
-                  <span className="absolute top-2 right-2 bg-[#f59e0b] text-[#451a03] text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs">
-                    {product.discountLabel}
-                  </span>
-                </div>
+          {PRODUCTS.map((product, index) => {
+            const savings = Math.max(0, product.normalPrice - product.price);
+            // Subtle shape variation to break cookie-cutter uniformity
+            const cardShapeClass = index % 2 === 0 ? 'rounded-2xl rounded-tr-3xl' : 'rounded-3xl rounded-tl-2xl';
 
-                <div className="p-4 space-y-2">
-                  <h3 
+            return (
+              <div
+                key={product.id}
+                className={`bg-white ${cardShapeClass} border border-kajel-border/60 overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group`}
+              >
+                <div>
+                  <div 
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Ver detalle completo de ${product.name}`}
                     onClick={() => onSelectProduct(product)}
-                    className="font-headline text-base font-bold text-[#1c1917] hover:text-[#b45309] cursor-pointer"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onSelectProduct(product);
+                      }
+                    }}
+                    className="relative h-52 bg-kajel-cream/50 overflow-hidden cursor-pointer focus-visible:outline-2 focus-visible:outline-kajel-amber"
                   >
-                    {product.name}
-                  </h3>
-                  <p className="text-xs text-[#57534e] line-clamp-2">
-                    {product.subtitle}
-                  </p>
-
-                  <div className="pt-2 border-t border-[#e7e2d7]/20 space-y-1">
-                    <span className="text-[10px] text-[#b45309] font-bold uppercase block">Incluye:</span>
-                    <ul className="text-[11px] text-[#57534e] space-y-0.5">
-                      {product.inclusions.slice(0, 2).map((inc, i) => (
-                        <li key={i} className="truncate flex items-center gap-1">
-                          <span className="w-1 h-1 rounded-full bg-[#f59e0b]"></span>
-                          <span>{inc}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 pt-0">
-                <div className="flex items-center justify-between mb-3 border-t border-[#e7e2d7]/20 pt-3">
-                  <div>
-                    <span className="text-[10px] text-[#78716c] line-through block">
-                      Normal: S/ {product.normalPrice.toFixed(2)}
-                    </span>
-                    <div className="flex items-center gap-1">
-                      <span className="text-xs text-[#b45309] font-bold">Preventa:</span>
-                      <span className="font-headline text-base font-bold text-[#b45309]">
-                        S/ {product.price.toFixed(2)}
+                    <img
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      src={product.image}
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                    />
+                    {product.tag && (
+                      <span className={`absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-xs ${product.tagColor || 'bg-kajel-amber text-white'}`}>
+                        {product.tag}
                       </span>
+                    )}
+                    {savings > 0 && (
+                      <span className="absolute top-2.5 right-2.5 bg-kajel-gold text-kajel-brown text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+                        Ahorra S/ {savings.toFixed(2)}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="p-4 space-y-2.5">
+                    <button
+                      type="button"
+                      onClick={() => onSelectProduct(product)}
+                      className="text-left font-headline text-base font-bold text-kajel-dark hover:text-kajel-amber cursor-pointer transition-colors block w-full focus-visible:outline-none"
+                    >
+                      {product.name}
+                    </button>
+                    <p className="text-xs text-kajel-muted line-clamp-2 leading-relaxed">
+                      {product.subtitle}
+                    </p>
+
+                    <div className="pt-2 border-t border-dashed border-kajel-border/60 space-y-1">
+                      <span className="text-[10px] text-kajel-amber font-bold uppercase block tracking-wider">
+                        Incluye en preventa:
+                      </span>
+                      <ul className="text-[11px] text-kajel-muted space-y-1">
+                        {product.inclusions.slice(0, 2).map((inc, i) => (
+                          <li key={i} className="truncate flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-kajel-gold flex-shrink-0" />
+                            <span className="truncate">{inc}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => onAddToCart(product)}
-                    className="py-2 bg-[#fef3c7] hover:bg-[#fef3c7] text-[#1c1917] text-xs font-bold rounded-lg transition-colors"
-                  >
-                    + Bolsa
-                  </button>
-                  <button
-                    onClick={() => onSelectProduct(product)}
-                    className="py-2 bg-[#b45309] hover:bg-[#d97706] text-white text-xs font-bold rounded-lg transition-colors text-center"
-                  >
-                    Detalles
-                  </button>
+                <div className="p-4 pt-0">
+                  <div className="flex items-center justify-between mb-3 border-t border-kajel-border/50 pt-3">
+                    <div>
+                      <span className="text-[10px] text-[#78716c] line-through block">
+                        Normal: S/ {product.normalPrice.toFixed(2)}
+                      </span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs text-kajel-amber font-bold">Preventa:</span>
+                        <span className="font-headline text-base font-bold text-kajel-amber">
+                          S/ {product.price.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                    {savings > 0 && (
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                        -{Math.round((savings / product.normalPrice) * 100)}%
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Clearly distinct hover buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      aria-label={`Añadir ${product.name} a la bolsa de compras`}
+                      onClick={() => onAddToCart(product)}
+                      className="py-2.5 px-2 bg-kajel-warm hover:bg-amber-200 active:bg-amber-300 text-kajel-dark hover:text-kajel-brown text-xs font-bold rounded-xl border border-amber-300/70 hover:border-amber-400 transition-all duration-150 text-center active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-kajel-amber"
+                    >
+                      + Bolsa
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={`Ver detalles de ${product.name}`}
+                      onClick={() => onSelectProduct(product)}
+                      className="py-2.5 px-2 bg-kajel-amber hover:bg-kajel-amber-dark active:bg-kajel-amber-hover text-white text-xs font-bold rounded-xl shadow-2xs hover:shadow-xs transition-all duration-150 text-center active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-kajel-amber"
+                    >
+                      Detalles
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      {/* WHY CHOOSE KAJEL CRAFT SECTION */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="rounded-2xl bg-white border border-[#e7e2d7]/30 p-6 md:p-10 shadow-sm">
+      {/* WHY CHOOSE KAJEL CRAFT SECTION (Specific, human & artisanal copy) */}
+      <section aria-label="Por qué elegir flores artesanales Kajel" className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="rounded-3xl bg-white border border-kajel-border/60 p-6 md:p-10 shadow-xs relative overflow-hidden">
           <div className="max-w-2xl mx-auto text-center space-y-3 mb-8">
-            <span className="text-xs uppercase font-bold text-[#b45309] tracking-wider">
-              ¿Por qué elegir Flores Eternas Kajel?
+            <span className="text-xs uppercase font-bold text-kajel-amber tracking-wider block">
+              Flores Eternas Hechas a Mano
             </span>
-            <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
-              El detalle que dura toda la vida
+            <h2 className="font-headline text-2xl md:text-3xl font-bold text-kajel-dark">
+              El cariño de un detalle que no muere en el florero
             </h2>
-            <p className="text-xs md:text-sm text-[#57534e]">
-              A diferencia de las flores naturales que marchitan en 3 días, nuestros girasoles tejidos a mano conservan su forma, color y significado por siempre.
+            <p className="text-xs md:text-sm text-kajel-muted leading-relaxed">
+              A diferencia de las flores frescas que duran solo unos días, nuestros girasoles en chenille conservan su textura aterciopelada, color vivo y valor sentimental por siempre.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-5 rounded-xl bg-[#fffbeb] border border-[#e7e2d7]/30 space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#fef3c7] flex items-center justify-center text-[#b45309]">
-                <Sun className="w-5 h-5 fill-[#b45309]" />
+            <div className="p-6 rounded-2xl rounded-tr-3xl bg-kajel-cream/60 border border-kajel-border/60 space-y-3 hover:shadow-xs transition-shadow">
+              <div className="w-11 h-11 rounded-xl bg-kajel-warm flex items-center justify-center text-kajel-amber border border-amber-200/60 shadow-2xs">
+                <ChenilleSunflowerIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-headline text-base font-bold text-[#1c1917]">Técnica Chenille Premium</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Cada pétalo es moldeado a mano con limpiapipas aterciopelado de alta densidad y follaje floral texturizado de larga durabilidad.
+              <h3 className="font-headline text-base font-bold text-kajel-dark">Técnica Chenille Aterciopelada</h3>
+              <p className="text-xs text-kajel-muted leading-relaxed">
+                Moldeamos pétalo por pétalo con limpiapipas chenille de alta densidad, logrando flores mullidas, resistentes y con un tacto delicado único.
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-[#fffbeb] border border-[#e7e2d7]/30 space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#fef3c7] flex items-center justify-center text-[#b45309]">
-                <Sparkles className="w-5 h-5 text-[#b45309]" />
+            <div className="p-6 rounded-2xl rounded-tl-3xl bg-kajel-cream/60 border border-kajel-border/60 space-y-3 hover:shadow-xs transition-shadow">
+              <div className="w-11 h-11 rounded-xl bg-kajel-warm flex items-center justify-center text-kajel-amber border border-amber-200/60 shadow-2xs">
+                <Sparkles className="w-5 h-5 text-kajel-amber" />
               </div>
-              <h3 className="font-headline text-base font-bold text-[#1c1917]">Joyas Giratorias Inoxidables</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Nuestros gift boxes incluyen joyas en acero inoxidable dorado con mecanismo giratorio antiestrés y acabado brillante garantizado.
+              <h3 className="font-headline text-base font-bold text-kajel-dark">Joyas Giratorias Inoxidables</h3>
+              <p className="text-xs text-kajel-muted leading-relaxed">
+                Nuestros gift boxes incorporan anillos y dijes en acero quirúrgico dorado con mecanismo giratorio antiestrés, diseñados para acompañarla siempre.
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-[#fffbeb] border border-[#e7e2d7]/30 space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#fef3c7] flex items-center justify-center text-[#b45309]">
-                <ShieldCheck className="w-5 h-5 text-[#b45309]" />
+            <div className="p-6 rounded-2xl rounded-tr-3xl bg-kajel-cream/60 border border-kajel-border/60 space-y-3 hover:shadow-xs transition-shadow">
+              <div className="w-11 h-11 rounded-xl bg-kajel-warm flex items-center justify-center text-kajel-amber border border-amber-200/60 shadow-2xs">
+                <ShieldCheck className="w-5 h-5 text-kajel-amber" />
               </div>
-              <h3 className="font-headline text-base font-bold text-[#1c1917]">Atención Humana & Puntual</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Coordinamos contigo cada detalle por WhatsApp: foto previa de tu ramo terminado, dedicatoria impresa y ruta de entrega en Lima.
+              <h3 className="font-headline text-base font-bold text-kajel-dark">Atención Cálida & Entrega Puntual</h3>
+              <p className="text-xs text-kajel-muted leading-relaxed">
+                Te enviamos foto previa de tu ramo terminado por WhatsApp, caligrafiamos tu dedicatoria en tarjeta fina y coordinamos la ruta de entrega en Lima.
               </p>
             </div>
           </div>
@@ -378,58 +561,58 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
+      <section aria-label="Opiniones de clientes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
         <div className="text-center space-y-2">
-          <span className="text-xs uppercase font-bold text-[#b45309] tracking-wider">
-            Testimonios Reales
+          <span className="text-xs uppercase font-bold text-kajel-amber tracking-wider block">
+            Historias & Experiencias Reales
           </span>
-          <h2 className="font-headline text-2xl font-bold text-[#1c1917]">
+          <h2 className="font-headline text-2xl font-bold text-kajel-dark">
             Lo que dicen quienes ya regalaron Kajel
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-5 rounded-xl bg-white border border-[#e7e2d7]/30 shadow-sm space-y-3">
-            <div className="flex text-[#f59e0b] gap-0.5">
+          <div className="p-5 rounded-2xl bg-white border border-kajel-border/60 shadow-2xs space-y-3">
+            <div className="flex text-kajel-gold gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#f59e0b]" />
+                <Star key={i} className="w-4 h-4 fill-kajel-gold text-kajel-gold" />
               ))}
             </div>
-            <p className="text-xs text-[#57534e] italic leading-relaxed">
-              "¡Mi novia quedó fascinada con la Patita Novia y las luces! El girasol es idéntico a las fotos y la cajita llegó perfecta a Miraflores."
+            <p className="text-xs text-kajel-muted italic leading-relaxed">
+              "¡Mi novia quedó fascinada con la Patita Novia y las luces! El girasol es idéntico a las fotos y la cajita llegó perfecta y puntual a Miraflores."
             </p>
-            <div className="pt-2 border-t border-[#e7e2d7]/20 flex items-center justify-between text-xs">
-              <span className="font-bold text-[#1c1917]">Diego M.</span>
+            <div className="pt-2 border-t border-dashed border-kajel-border/50 flex items-center justify-between text-xs">
+              <span className="font-bold text-kajel-dark">Diego M.</span>
               <span className="text-[#78716c]">Miraflores, Lima</span>
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-white border border-[#e7e2d7]/30 shadow-sm space-y-3">
-            <div className="flex text-[#f59e0b] gap-0.5">
+          <div className="p-5 rounded-2xl bg-white border border-kajel-border/60 shadow-2xs space-y-3">
+            <div className="flex text-kajel-gold gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#f59e0b]" />
+                <Star key={i} className="w-4 h-4 fill-kajel-gold text-kajel-gold" />
               ))}
             </div>
-            <p className="text-xs text-[#57534e] italic leading-relaxed">
-              "El pack carnerita con el anillo giratorio es hermoso y súper delicado. Excelente atención por WhatsApp, respondieron al instante."
+            <p className="text-xs text-kajel-muted italic leading-relaxed">
+              "El pack carnerita con el anillo giratorio es hermoso y súper delicado. La atención por WhatsApp fue muy amable y resolvieron mis dudas al toque."
             </p>
-            <div className="pt-2 border-t border-[#e7e2d7]/20 flex items-center justify-between text-xs">
-              <span className="font-bold text-[#1c1917]">Valeria C.</span>
+            <div className="pt-2 border-t border-dashed border-kajel-border/50 flex items-center justify-between text-xs">
+              <span className="font-bold text-kajel-dark">Valeria C.</span>
               <span className="text-[#78716c]">Surco, Lima</span>
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-white border border-[#e7e2d7]/30 shadow-sm space-y-3">
-            <div className="flex text-[#f59e0b] gap-0.5">
+          <div className="p-5 rounded-2xl bg-white border border-kajel-border/60 shadow-2xs space-y-3">
+            <div className="flex text-kajel-gold gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#f59e0b]" />
+                <Star key={i} className="w-4 h-4 fill-kajel-gold text-kajel-gold" />
               ))}
             </div>
-            <p className="text-xs text-[#57534e] italic leading-relaxed">
-              "Aproveché la preventa con las luces hada y los bombones de regalo. Llegó puntual el 21 de septiembre como prometieron. 10/10."
+            <p className="text-xs text-kajel-muted italic leading-relaxed">
+              "Aproveché la preventa con las luces hada y los bombones de regalo. Llegó puntual el 21 de septiembre como prometieron. La calidad del chenille es 10/10."
             </p>
-            <div className="pt-2 border-t border-[#e7e2d7]/20 flex items-center justify-between text-xs">
-              <span className="font-bold text-[#1c1917]">Renzo L.</span>
+            <div className="pt-2 border-t border-dashed border-kajel-border/50 flex items-center justify-between text-xs">
+              <span className="font-bold text-kajel-dark">Carlos L.</span>
               <span className="text-[#78716c]">San Borja, Lima</span>
             </div>
           </div>
@@ -438,25 +621,27 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* WHATSAPP CTA CALLOUT */}
       <section className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="rounded-2xl bg-[#b45309] text-white p-8 md:p-12 text-center space-y-6 relative overflow-hidden shadow-md">
+        <div className="rounded-3xl bg-kajel-amber text-white p-8 md:p-12 text-center space-y-6 relative overflow-hidden shadow-md">
+          {/* Decorative craft background elements */}
+          <div className="absolute -top-16 -right-16 w-64 h-64 bg-kajel-gold/20 rounded-full blur-2xl pointer-events-none" />
           <div className="max-w-xl mx-auto space-y-3 relative z-10">
-            <span className="inline-block px-3 py-1 bg-[#f59e0b] text-[#451a03] rounded-full text-xs font-bold">
-              Atención Directa y Personalizada
+            <span className="inline-block px-3 py-1 bg-kajel-yellow text-kajel-brown rounded-full text-xs font-bold shadow-2xs">
+              Atención Directa & Caligrafía Personalizada
             </span>
             <h2 className="font-headline text-2xl md:text-3xl font-bold">
-              ¿Tienes una dedicatoria especial o pedido personalizado?
+              ¿Tienes una dedicatoria especial o deseas coordinar tu entrega?
             </h2>
-            <p className="text-xs md:text-sm text-[#fde68a] leading-relaxed">
-              Escríbenos directamente por WhatsApp. Te ayudamos a armar el paquete ideal con tu frase favorita, fecha y distrito de entrega en Lima.
+            <p className="text-xs md:text-sm text-amber-100 leading-relaxed">
+              Escríbenos directamente por WhatsApp. Te asesoramos para personalizar el paquete con tu mensaje en tarjeta fina, fecha exacta y distrito de entrega en Lima.
             </p>
             <div className="pt-2">
               <a
-                href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola Kajel, deseo personalizar un pedido de Flores Amarillas.')}`}
+                href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola Kajel, deseo personalizar un pedido de Flores Amarillas para este 21 de Septiembre.')}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-[#b45309] hover:bg-[#fef3c7] font-bold text-sm rounded-xl shadow-md transition-all"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-white text-kajel-amber hover:bg-kajel-warm active:bg-amber-100 font-bold text-sm rounded-2xl shadow-md hover:shadow-lg transition-all active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-white"
               >
-                <MessageCircle className="w-5 h-5 text-[#b45309] fill-[#b45309]" />
+                <MessageCircle className="w-5 h-5 text-kajel-amber" />
                 <span>Conversar con un Asesor (+51 970 480 398)</span>
               </a>
             </div>
