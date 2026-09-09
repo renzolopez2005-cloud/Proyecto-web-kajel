@@ -51,9 +51,17 @@ export interface OrderForm {
   notes: string;
 }
 
-export type ActiveScreen = 'blueprint' | 'home' | 'catalogo' | 'producto' | 'nosotros' | 'contacto';
+export type ActiveScreen = 'home' | 'catalogo' | 'producto' | 'nosotros' | 'contacto';
 
-export type ColorPalette = 'girasol' | 'botanico' | 'romance' | 'noche';
+export type ColorPalette = 
+  | 'girasol' 
+  | 'botanico' 
+  | 'romance' 
+  | 'noche' 
+  | 'lavanda' 
+  | 'atardecer' 
+  | 'oceano' 
+  | 'terracota';
 
 export interface PaletteOption {
   id: ColorPalette;

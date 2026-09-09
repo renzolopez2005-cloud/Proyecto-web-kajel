@@ -13,8 +13,8 @@ import {
   Camera, 
   PlayCircle, 
   ThumbsUp, 
-  Layers, 
-  GitFork 
+  Layers,
+  ShieldCheck
 } from 'lucide-react';
 
 interface FooterProps {
@@ -97,7 +97,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectScreen }) => {
                   onClick={() => onSelectScreen('producto')}
                   className="hover:text-[#b45309] transition-colors text-left"
                 >
-                  Gift Box Exclusiva
+                  Detalles de Producto
                 </button>
               </li>
               <li>
@@ -119,29 +119,28 @@ export const Footer: React.FC<FooterProps> = ({ onSelectScreen }) => {
             </ul>
           </div>
 
-          {/* Architecture Views */}
+          {/* Guarantee & Quality */}
           <div className="space-y-2">
-            <h4 className="font-headline text-xs font-bold uppercase tracking-wider text-[#1c1917]">
-              Arquitectura de Venta
+            <h4 className="font-headline text-xs font-bold uppercase tracking-wider text-[#1c1917] flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#b45309]" />
+              Compromiso Kajel
             </h4>
-            <ul className="space-y-1.5 text-xs">
-              <li>
-                <button
-                  onClick={() => onSelectScreen('blueprint')}
-                  className="flex items-center gap-1.5 text-[#b45309] font-semibold hover:underline"
-                >
-                  <GitFork className="w-3.5 h-3.5" />
-                  <span>Ver Mapa Conceptual Completo</span>
-                </button>
+            <ul className="space-y-1.5 text-xs text-[#57534e]">
+              <li className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
+                Tejido artesanal 100% a mano
               </li>
-              <li className="text-[11px] text-[#57534e]">
-                • Nivel 1: Home Landing Page
+              <li className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
+                Flores eternas que no se marchitan
               </li>
-              <li className="text-[11px] text-[#57534e]">
-                • Nivel 2: Ramas de Catálogo, Historia y Pedidos
+              <li className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
+                Luces LED y dedicatoria personalizada
               </li>
-              <li className="text-[11px] text-[#57534e]">
-                • Nivel 3: Experiencia Single Product
+              <li className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
+                Envíos programados a todo Lima
               </li>
             </ul>
           </div>

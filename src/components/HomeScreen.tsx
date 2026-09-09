@@ -319,7 +319,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     onClick={() => onSelectProduct(product)}
                     className="py-2 bg-[#b45309] hover:bg-[#d97706] text-white text-xs font-bold rounded-lg transition-colors text-center"
                   >
-                    Personalizar
+                    Detalles
                   </button>
                 </div>
               </div>

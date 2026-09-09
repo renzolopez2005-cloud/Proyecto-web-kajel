@@ -1,12 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ActiveScreen, ColorPalette } from '../types';
-import { WHATSAPP_PHONE, WHATSAPP_DISPLAY, INSTAGRAM_HANDLE } from '../data/products';
 import { PALETTES } from '../data/palettes';
 import { 
-  GitFork, 
+  Sun,
   Eye, 
-  MessageCircle, 
-  Camera, 
   ShoppingBag, 
   Layers, 
   Home, 
@@ -54,53 +51,31 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
     <header className="sticky top-0 z-50 bg-[#ffffff]/95 backdrop-blur-md shadow-sm border-b border-[#e7e2d7]/40">
       {/* Top Architecture Bar */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
-        {/* Brand & Architecture Identity */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#f59e0b] flex items-center justify-center text-[#78350f] shadow-sm flex-shrink-0">
-            <GitFork className="w-5 h-5 stroke-[2.5]" />
+        {/* Brand Identity */}
+        <div 
+          className="flex items-center gap-3 cursor-pointer group"
+          onClick={() => onSelectScreen('home')}
+        >
+          <div className="w-10 h-10 rounded-xl bg-[#f59e0b] flex items-center justify-center text-[#78350f] shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
+            <Sun className="w-5 h-5 fill-[#78350f]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h1 className="font-headline text-lg md:text-xl text-[#b45309] font-bold tracking-tight">
-                Arquitectura Web & Tienda Online
+                Kajel Flores Amarillas
               </h1>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#fde68a] text-[#451a03]">
-                Kajel v2.4
+                Preventa Septiembre
               </span>
             </div>
             <p className="font-body text-xs text-[#57534e]">
-              Mapa conceptual de navegación & experiencia e-commerce de conversión
+              Ramos y detalles de flores eternas tejidos a mano en Lima
             </p>
           </div>
         </div>
 
-        {/* Quick status pills */}
+        {/* Quick actions & cart */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fef3c7] text-[#57534e] text-xs font-semibold">
-            <span className="w-2 h-2 rounded-full bg-[#f59e0b] animate-pulse"></span>
-            <span>Campaña Flores Amarillas • Preventa Activa</span>
-          </div>
-          
-          <a 
-            href={`https://wa.me/${WHATSAPP_PHONE}`}
-            target="_blank" 
-            rel="noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fef3c7] hover:bg-[#fde68a] text-[#57534e] text-xs font-semibold transition-colors"
-          >
-            <MessageCircle className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>WhatsApp: {WHATSAPP_DISPLAY}</span>
-          </a>
-
-          <a 
-            href="https://instagram.com/Kajel.pe"
-            target="_blank" 
-            rel="noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fef3c7] hover:bg-[#fde68a] text-[#57534e] text-xs font-semibold transition-colors"
-          >
-            <Camera className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>{INSTAGRAM_HANDLE}</span>
-          </a>
-
           {/* Palette Selector Trigger */}
           <div className="relative" ref={paletteRef}>
             <button
@@ -116,10 +91,10 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
 
             {/* Dropdown Menu */}
             {isPaletteOpen && (
-              <div className="absolute right-0 mt-2 w-64 rounded-xl bg-white shadow-xl border border-[#e7e2d7] p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-2.5 py-1.5 border-b border-[#e7e2d7]/50 mb-1.5">
+              <div className="absolute right-0 mt-2 w-72 max-h-[420px] overflow-y-auto rounded-xl bg-white shadow-xl border border-[#e7e2d7] p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                <div className="sticky top-0 bg-white/95 backdrop-blur-xs px-2.5 py-1.5 border-b border-[#e7e2d7]/50 mb-1.5 z-10">
                   <span className="text-[11px] font-bold text-[#1c1917] uppercase tracking-wider block">
-                    Paletas de Color
+                    Paletas de Color ({PALETTES.length})
                   </span>
                   <span className="text-[10px] text-[#78716c]">
                     Personaliza la estética floral de la tienda
@@ -193,22 +168,8 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
         <div className="max-w-7xl mx-auto flex items-center gap-2 min-w-max">
           <span className="text-[11px] font-bold text-[#b45309] uppercase tracking-wider mr-1 flex items-center gap-1">
             <Layers className="w-3.5 h-3.5" />
-            Vistas del Sistema:
+            Menú:
           </span>
-
-          <button
-            onClick={() => onSelectScreen('blueprint')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              activeScreen === 'blueprint'
-                ? 'bg-[#b45309] text-white shadow-sm'
-                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]/40'
-            }`}
-          >
-            <GitFork className="w-3.5 h-3.5" />
-            <span>Vista Arquitectura & Flujo (Diagrama)</span>
-          </button>
-
-          <span className="text-[#e7e2d7]">|</span>
 
           <button
             onClick={() => onSelectScreen('home')}
@@ -219,7 +180,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             }`}
           >
             <Home className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>Nivel 1: Home Landing</span>
+            <span>Inicio</span>
           </button>
 
           <button
@@ -231,7 +192,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             }`}
           >
             <Package className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>Rama A: Catálogo Preventa</span>
+            <span>Catálogo Flores Amarillas</span>
           </button>
 
           <button
@@ -243,7 +204,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>Nivel 3: Ficha Detalle Producto</span>
+            <span>Detalles</span>
           </button>
 
           <button
@@ -255,7 +216,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             }`}
           >
             <HeartHandshake className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>Rama B: Nosotros</span>
+            <span>Sobre Nosotros</span>
           </button>
 
           <button
@@ -267,7 +228,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             }`}
           >
             <PhoneCall className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>Rama C: Pedidos & Contacto</span>
+            <span>Pedidos & Envíos Lima</span>
           </button>
         </div>
       </div>

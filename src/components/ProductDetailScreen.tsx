@@ -131,33 +131,6 @@ export const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({
               </div>
             </div>
 
-            {/* Thumbnails row */}
-            {currentProduct.gallery && currentProduct.gallery.length > 0 && (
-              <div className="grid grid-cols-3 gap-3">
-                {currentProduct.gallery.map((item, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImage(item.url)}
-                    className={`rounded-xl overflow-hidden border-2 transition-all cursor-pointer text-left ${
-                      activeImage === item.url
-                        ? 'border-[#b45309] ring-2 ring-[#b45309]/30 scale-[1.02]'
-                        : 'border-transparent hover:border-[#e7e2d7]'
-                    }`}
-                  >
-                    <img
-                      alt={item.label}
-                      className="w-full h-20 object-cover"
-                      src={item.thumb}
-                      referrerPolicy="no-referrer"
-                    />
-                    <span className="block text-[11px] font-bold text-center py-1 bg-[#fef3c7] text-[#1c1917] truncate px-1">
-                      {item.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
-
             {/* Reassurance guarantees */}
             <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#e7e2d7]/30 text-center">
               <div className="p-2 rounded-lg bg-[#fffbeb]">

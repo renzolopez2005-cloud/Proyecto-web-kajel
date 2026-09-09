@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ActiveScreen, Product, ProductVariant, CartItem, ColorPalette } from './types';
 import { PRODUCTS, WHATSAPP_PHONE, WHATSAPP_DISPLAY } from './data/products';
 import { TopToolbar } from './components/TopToolbar';
-import { BlueprintView } from './components/BlueprintView';
 import { HomeScreen } from './components/HomeScreen';
 import { CatalogScreen } from './components/CatalogScreen';
 import { ProductDetailScreen } from './components/ProductDetailScreen';
@@ -13,7 +12,7 @@ import { Footer } from './components/Footer';
 import { MessageCircle, ShoppingBag } from 'lucide-react';
 
 export default function App() {
-  const [activeScreen, setActiveScreen] = useState<ActiveScreen>('blueprint');
+  const [activeScreen, setActiveScreen] = useState<ActiveScreen>('home');
   const [selectedProduct, setSelectedProduct] = useState<Product>(PRODUCTS[2]); // Default to Gift Box V1
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [currentPalette, setCurrentPalette] = useState<ColorPalette>('girasol');
@@ -110,15 +109,6 @@ export default function App() {
 
       {/* Dynamic Screen View Content */}
       <main className="flex-1">
-        {activeScreen === 'blueprint' && (
-          <BlueprintView
-            onNavigateScreen={(screen) => setActiveScreen(screen)}
-            onAddToCart={handleAddToCart}
-            onOpenProductDetail={handleSelectProduct}
-            cartCount={totalCartCount}
-          />
-        )}
-
         {activeScreen === 'home' && (
           <HomeScreen
             onSelectProduct={handleSelectProduct}

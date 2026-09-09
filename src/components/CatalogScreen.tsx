@@ -275,7 +275,7 @@ export const CatalogScreen: React.FC<CatalogScreenProps> = ({
                       className="py-2.5 bg-[#b45309] hover:bg-[#d97706] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer text-center"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Personalizar</span>
+                      <span>Detalles</span>
                     </button>
                   </div>
 

@@ -37,7 +37,12 @@ export function createCartWhatsAppLink(
     return `${idx + 1}. *${item.product.name}*${vText} x${item.quantity} = S/ ${(item.product.price * item.quantity).toFixed(2)}${dText}`;
   }).join('\n');
 
-  const subtotal = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const subtotal = items.reduce(
+    (sum, item) => sum + (item.product.price + (item.selectedVariant?.priceDiff || 0)) * item.quantity, 
+    0
+  );
+  const deliveryFee = 2.5;
+  const grandTotal = subtotal + deliveryFee;
 
   let deliveryDetails = '';
   if (orderForm?.customerName || orderForm?.district) {
@@ -47,6 +52,7 @@ export function createCartWhatsAppLink(
 • *Destinatario:* ${orderForm.recipientName || orderForm.customerName || 'A coordinar'}
 • *Distrito / Dirección:* ${orderForm.district || ''} ${orderForm.deliveryAddress || ''}
 • *Fecha deseada:* ${orderForm.deliveryDate || 'Pronta entrega'}
+• *Costo de envío:* S/ ${deliveryFee.toFixed(2)}
 • *Método de Pago preferido:* ${orderForm.paymentMethod ? orderForm.paymentMethod.toUpperCase() : 'Yape / Plin'}`;
   }
 
@@ -55,7 +61,9 @@ export function createCartWhatsAppLink(
 🛍️ *Detalle del Pedido:*
 ${itemsList}
 
-💰 *TOTAL A PAGAR: S/ ${subtotal.toFixed(2)}*
+📦 *Subtotal:* S/ ${subtotal.toFixed(2)}
+🚚 *Envío a Domicilio:* S/ ${deliveryFee.toFixed(2)}
+💰 *TOTAL A PAGAR: S/ ${grandTotal.toFixed(2)}*
 ✨ *Beneficio Preventa:* Luces hada instaladas + Bombones Bon o bon gratis en todos los packs.${deliveryDetails}
 
 Por favor confírmenme el número de cuenta / QR para realizar el adelanto por Yape/Plin. ¡Muchas gracias!`;

@@ -75,6 +75,66 @@
 [data-palette="romance"] .text-\[\#451a03\] { color: #831843 !important; }
 [data-palette="romance"] .border-\[\#e7e2d7\] { border-color: #f0dbe2 !important; }
 
+/* Theme: Lavanda Silvestre - Lilac Violet & Sunflower Spark */
+[data-palette="lavanda"] {
+  background-color: #faf7ff !important;
+  color: #1e152a !important;
+}
+[data-palette="lavanda"] .text-\[\#b45309\] { color: #7c3aed !important; }
+[data-palette="lavanda"] .bg-\[\#b45309\] { background-color: #7c3aed !important; }
+[data-palette="lavanda"] .hover\:bg-\[\#d97706\]:hover { background-color: #6d28d9 !important; }
+[data-palette="lavanda"] .border-\[\#b45309\] { border-color: #7c3aed !important; }
+[data-palette="lavanda"] .bg-\[\#fdfbf7\] { background-color: #faf7ff !important; }
+[data-palette="lavanda"] .bg-\[\#fffbeb\] { background-color: #f5f3ff !important; }
+[data-palette="lavanda"] .bg-\[\#fef3c7\] { background-color: #ede9fe !important; }
+[data-palette="lavanda"] .text-\[\#451a03\] { color: #5b21b6 !important; }
+[data-palette="lavanda"] .border-\[\#e7e2d7\] { border-color: #ddd6fe !important; }
+
+/* Theme: Atardecer Dorado - Sunset Terracotta & Warm Amber */
+[data-palette="atardecer"] {
+  background-color: #fff9f5 !important;
+  color: #2c1810 !important;
+}
+[data-palette="atardecer"] .text-\[\#b45309\] { color: #c2410c !important; }
+[data-palette="atardecer"] .bg-\[\#b45309\] { background-color: #c2410c !important; }
+[data-palette="atardecer"] .hover\:bg-\[\#d97706\]:hover { background-color: #9a3412 !important; }
+[data-palette="atardecer"] .border-\[\#b45309\] { border-color: #c2410c !important; }
+[data-palette="atardecer"] .bg-\[\#fdfbf7\] { background-color: #fff9f5 !important; }
+[data-palette="atardecer"] .bg-\[\#fffbeb\] { background-color: #fff7ed !important; }
+[data-palette="atardecer"] .bg-\[\#fef3c7\] { background-color: #ffedd5 !important; }
+[data-palette="atardecer"] .text-\[\#451a03\] { color: #7c2d12 !important; }
+[data-palette="atardecer"] .border-\[\#e7e2d7\] { border-color: #fed7aa !important; }
+
+/* Theme: Océano Serena - Cerulean Blue & Sunflower */
+[data-palette="oceano"] {
+  background-color: #f4f9fd !important;
+  color: #0c2033 !important;
+}
+[data-palette="oceano"] .text-\[\#b45309\] { color: #0369a1 !important; }
+[data-palette="oceano"] .bg-\[\#b45309\] { background-color: #0369a1 !important; }
+[data-palette="oceano"] .hover\:bg-\[\#d97706\]:hover { background-color: #075985 !important; }
+[data-palette="oceano"] .border-\[\#b45309\] { border-color: #0369a1 !important; }
+[data-palette="oceano"] .bg-\[\#fdfbf7\] { background-color: #f4f9fd !important; }
+[data-palette="oceano"] .bg-\[\#fffbeb\] { background-color: #f0f9ff !important; }
+[data-palette="oceano"] .bg-\[\#fef3c7\] { background-color: #e0f2fe !important; }
+[data-palette="oceano"] .text-\[\#451a03\] { color: #075985 !important; }
+[data-palette="oceano"] .border-\[\#e7e2d7\] { border-color: #bae6fd !important; }
+
+/* Theme: Tierra & Arcilla - Rustic Terracotta & Earth */
+[data-palette="terracota"] {
+  background-color: #fdf8f5 !important;
+  color: #27140b !important;
+}
+[data-palette="terracota"] .text-\[\#b45309\] { color: #9a3412 !important; }
+[data-palette="terracota"] .bg-\[\#b45309\] { background-color: #9a3412 !important; }
+[data-palette="terracota"] .hover\:bg-\[\#d97706\]:hover { background-color: #7c2d12 !important; }
+[data-palette="terracota"] .border-\[\#b45309\] { border-color: #9a3412 !important; }
+[data-palette="terracota"] .bg-\[\#fdfbf7\] { background-color: #fdf8f5 !important; }
+[data-palette="terracota"] .bg-\[\#fffbeb\] { background-color: #faf5f0 !important; }
+[data-palette="terracota"] .bg-\[\#fef3c7\] { background-color: #fed7aa !important; }
+[data-palette="terracota"] .text-\[\#451a03\] { color: #7c2d12 !important; }
+[data-palette="terracota"] .border-\[\#e7e2d7\] { border-color: #e2d3c7 !important; }
+
 /* Theme: Noche Mágica - Obsidian Dark & Radiant Gold */
 [data-palette="noche"] {
   background-color: #12100e !important;
