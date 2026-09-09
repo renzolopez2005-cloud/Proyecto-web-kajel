@@ -110,7 +110,7 @@ export const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({
             <div className="relative rounded-2xl overflow-hidden bg-[#fffbeb] border border-[#e7e2d7]/20 shadow-md">
               <img
                 alt={currentProduct.name}
-                className="w-full h-80 sm:h-96 md:h-[420px] object-cover transition-all duration-300"
+                className="w-full h-80 sm:h-96 md:h-[420px] object-cover object-[center_30%] transition-all duration-300"
                 src={activeImage}
                 referrerPolicy="no-referrer"
               />
