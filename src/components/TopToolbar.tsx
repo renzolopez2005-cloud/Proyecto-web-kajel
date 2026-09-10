@@ -69,7 +69,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
               </span>
             </div>
             <p className="font-body text-xs text-[#57534e]">
-              Ramos y detalles de flores eternas tejidos a mano en Lima
+              Ramos y detalles de flores eternas elaborados a mano en Lima
             </p>
           </div>
         </div>

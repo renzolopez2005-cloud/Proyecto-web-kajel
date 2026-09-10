@@ -453,7 +453,7 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({ onNavigateCatalog }) =
               ¿Con cuánta anticipación debo reservar mi pedido?
             </h3>
             <p className="text-xs text-[#57534e] leading-relaxed">
-              Al ser un producto 100% tejido y ensamblado a mano, nuestros cupos para el 21 de septiembre son limitados. Recomendamos hacer tu reserva durante la preventa actual para garantizar stock y precio especial.
+              Al ser un producto 100% elaborado y ensamblado a mano, nuestros cupos para el 21 de septiembre son limitados. Recomendamos hacer tu reserva durante la preventa actual para garantizar stock y precio especial.
             </p>
           </div>
 

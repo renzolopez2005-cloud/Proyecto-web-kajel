@@ -125,7 +125,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl text-kajel-dark font-bold tracking-tight leading-tight">
                 Flores Amarillas que nunca se marchitan:{' '}
                 <span className="text-kajel-amber underline decoration-kajel-gold decoration-wavy underline-offset-4">
-                  el detalle tejido a mano
+                  el detalle elaborado a mano
                 </span>{' '}
                 para quien más amas
               </h1>
@@ -168,7 +168,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   </div>
                   <div>
                     <span className="font-bold text-xs text-kajel-dark block">100% Chenille</span>
-                    <span className="text-[11px] text-kajel-muted">Tejido a mano eterno</span>
+                    <span className="text-[11px] text-kajel-muted">Elaborado a mano eterno</span>
                   </div>
                 </div>
 
@@ -310,7 +310,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 Asegura tu ramo artesanal antes de que se agoten los cupos
               </h2>
               <p className="text-xs md:text-sm text-kajel-muted">
-                El tejido en chenille toma horas de confección artesanal. Reserva con anticipación y programa tu envío puntual en Lima.
+                La elaboración en chenille toma horas de confección artesanal. Reserva con anticipación y programa tu envío puntual en Lima.
               </p>
             </div>
           </div>

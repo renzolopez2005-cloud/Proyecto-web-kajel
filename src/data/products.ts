@@ -276,7 +276,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: '¿Las flores requieren algún cuidado especial?',
-    answer: 'Al ser flores eternas tejidas a mano en chenille aterciopelado de alta densidad, no necesitan agua ni marchitan. Simplemente mantenlas en un lugar seco bajo techo y límpialas ocasionalmente con un plumero suave para que brillen por años.'
+    answer: 'Al ser flores eternas elaboradas a mano en chenille aterciopelado de alta densidad, no necesitan agua ni marchitan. Simplemente mantenlas en un lugar seco bajo techo y límpialas ocasionalmente con un plumero suave para que brillen por años.'
   }
 ];
 

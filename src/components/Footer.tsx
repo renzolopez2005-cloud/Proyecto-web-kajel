@@ -37,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectScreen }) => {
               </span>
             </div>
             <p className="font-body text-xs leading-relaxed text-[#57534e]">
-              Detalles y ramos de flores eternas tejidos a mano con amor en Lima. Celebra la tradición de septiembre con un recuerdo imborrable.
+              Detalles y ramos de flores eternas elaborados a mano con amor en Lima. Celebra la tradición de septiembre con un recuerdo imborrable.
             </p>
             <div className="flex items-center gap-2 pt-1">
               <a
@@ -128,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectScreen }) => {
             <ul className="space-y-1.5 text-xs text-[#57534e]">
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
-                Tejido artesanal 100% a mano
+                Elaborado artesanalmente 100% a mano
               </li>
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b]" />
