@@ -85,12 +85,25 @@ export const CartModal: React.FC<CartModalProps> = ({
               </div>
             </div>
 
-            <button
-              onClick={onClose}
-              className="p-1.5 rounded-lg text-[#57534e] hover:bg-[#fef3c7] transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              {items.length > 0 && (
+                <button
+                  type="button"
+                  onClick={onClearCart}
+                  className="text-[11px] font-semibold text-[#78716c] hover:text-[#ba1a1a] px-2 py-1 rounded-md hover:bg-rose-50 transition-colors cursor-pointer"
+                  title="Vaciar toda la bolsa"
+                >
+                  Vaciar
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-1.5 rounded-lg text-[#57534e] hover:bg-[#fef3c7] transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Scrollable Body */}

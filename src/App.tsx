@@ -17,17 +17,34 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [currentPalette, setCurrentPalette] = useState<ColorPalette>('girasol');
   
-  // Initial cart with a default starter item so the cart isn't empty on first view
+  // Cart state: empty by default, persists only items explicitly added by the user
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    return [
-      {
-        product: PRODUCTS[2],
-        selectedVariant: PRODUCTS[2].variants ? PRODUCTS[2].variants[0] : undefined,
-        quantity: 1,
-        dedicationText: '“Ella sabía que él sabía que algún día pasaría que vendría a buscarla con sus Flores Amarillas”',
-      },
-    ];
+    try {
+      const saved = localStorage.getItem('kajel_cart_items');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed;
+        }
+      }
+    } catch {
+      // ignore
+    }
+    return [];
   });
+
+  // Sync cart items with localStorage (clears storage when empty)
+  useEffect(() => {
+    try {
+      if (cartItems.length > 0) {
+        localStorage.setItem('kajel_cart_items', JSON.stringify(cartItems));
+      } else {
+        localStorage.removeItem('kajel_cart_items');
+      }
+    } catch {
+      // ignore
+    }
+  }, [cartItems]);
 
   // Scroll to top when changing screens
   useEffect(() => {
