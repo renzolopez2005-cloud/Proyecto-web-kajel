@@ -42,144 +42,358 @@
 }
 
 .custom-blueprint-bg {
-  background-color: #fdfbf7;
-  background-image: radial-gradient(#e7e2d7 0.75px, transparent 0.75px), radial-gradient(#e7e2d7 0.75px, #fdfbf7 0.75px);
+  background-color: var(--palette-sand, #fdfbf7);
+  background-image: radial-gradient(var(--palette-dot, #e7e2d7) 0.75px, transparent 0.75px), radial-gradient(var(--palette-dot, #e7e2d7) 0.75px, var(--palette-sand, #fdfbf7) 0.75px);
   background-size: 30px 30px;
   background-position: 0 0, 15px 15px;
 }
 
 .node-connector-line {
-  background: linear-gradient(180deg, #d97706 0%, #f59e0b 100%);
+  background: var(--palette-connector, linear-gradient(180deg, #d97706 0%, #f59e0b 100%));
 }
 
-/* Theme: Girasol Solar (Default) - Radiant Honey Amber, Sunflower Gold & Warm Ivory */
+/* ==========================================================================
+   KAJEL FLORAL PALETTE TOKENS & DEFINITIONS
+   ========================================================================== */
 
-/* Theme: Jardín Botánico - Emerald Green, Sunflower Yellow & Crisp Mint */
-[data-palette="botanico"] {
-  background-color: #f7faf7 !important;
-  color: #14351d !important;
+/* 1. Girasol Solar (Default) */
+[data-palette="girasol"],
+:root:not([data-palette]),
+:root[data-palette="girasol"] {
+  --palette-primary: #b45309;
+  --palette-primary-dark: #92400e;
+  --palette-primary-hover: #78350f;
+  --palette-accent: #f59e0b;
+  --palette-yellow: #fde68a;
+  --palette-cream: #fffbeb;
+  --palette-warm: #fef3c7;
+  --palette-sand: #fdfbf7;
+  --palette-border: #e7e2d7;
+  --palette-dark-accent: #451a03;
+  --palette-dark: #1c1917;
+  --palette-muted: #57534e;
+  --palette-dot: #e7e2d7;
+  --palette-connector: linear-gradient(180deg, #d97706 0%, #f59e0b 100%);
 }
-[data-palette="botanico"] .custom-blueprint-bg {
-  background-color: #f7faf7 !important;
-  background-image: radial-gradient(#d3e2d3 0.75px, transparent 0.75px), radial-gradient(#d3e2d3 0.75px, #f7faf7 0.75px) !important;
-}
-[data-palette="botanico"] .node-connector-line {
-  background: linear-gradient(180deg, #15803d 0%, #eab308 100%) !important;
-}
-[data-palette="botanico"] .text-\[\#b45309\] { color: #15803d !important; }
-[data-palette="botanico"] .bg-\[\#b45309\] { background-color: #15803d !important; }
-[data-palette="botanico"] .hover\:bg-\[\#d97706\]:hover { background-color: #166534 !important; }
-[data-palette="botanico"] .border-\[\#b45309\] { border-color: #15803d !important; }
-[data-palette="botanico"] .bg-\[\#fdfbf7\] { background-color: #f7faf7 !important; }
-[data-palette="botanico"] .bg-\[\#fffbeb\] { background-color: #f0fdf4 !important; }
-[data-palette="botanico"] .bg-\[\#fef3c7\] { background-color: #dcfce7 !important; }
-[data-palette="botanico"] .text-\[\#451a03\] { color: #14532d !important; }
-[data-palette="botanico"] .border-\[\#e7e2d7\] { border-color: #d8e5d8 !important; }
 
-/* Theme: Romance Floral - Rose Quartz & Golden Sunflower */
-[data-palette="romance"] {
-  background-color: #fffafb !important;
-  color: #29181e !important;
+/* 2. Jardín Botánico (Emerald Green & Leaf) */
+[data-palette="botanico"],
+:root[data-palette="botanico"] {
+  --palette-primary: #15803d;
+  --palette-primary-dark: #166534;
+  --palette-primary-hover: #14532d;
+  --palette-accent: #16a34a;
+  --palette-yellow: #bbf7d0;
+  --palette-cream: #f0fdf4;
+  --palette-warm: #dcfce7;
+  --palette-sand: #f7faf7;
+  --palette-border: #cde5d3;
+  --palette-dark-accent: #14532d;
+  --palette-dark: #052e16;
+  --palette-muted: #166534;
+  --palette-dot: #c7ddcd;
+  --palette-connector: linear-gradient(180deg, #15803d 0%, #16a34a 100%);
 }
-[data-palette="romance"] .custom-blueprint-bg {
-  background-color: #fffafb !important;
-  background-image: radial-gradient(#edd4dc 0.75px, transparent 0.75px), radial-gradient(#edd4dc 0.75px, #fffafb 0.75px) !important;
-}
-[data-palette="romance"] .node-connector-line {
-  background: linear-gradient(180deg, #be185d 0%, #f59e0b 100%) !important;
-}
-[data-palette="romance"] .text-\[\#b45309\] { color: #be185d !important; }
-[data-palette="romance"] .bg-\[\#b45309\] { background-color: #be185d !important; }
-[data-palette="romance"] .hover\:bg-\[\#d97706\]:hover { background-color: #9d174d !important; }
-[data-palette="romance"] .border-\[\#b45309\] { border-color: #be185d !important; }
-[data-palette="romance"] .bg-\[\#fdfbf7\] { background-color: #fffafb !important; }
-[data-palette="romance"] .bg-\[\#fffbeb\] { background-color: #fff1f2 !important; }
-[data-palette="romance"] .bg-\[\#fef3c7\] { background-color: #fce7f3 !important; }
-[data-palette="romance"] .text-\[\#451a03\] { color: #831843 !important; }
-[data-palette="romance"] .border-\[\#e7e2d7\] { border-color: #f0dbe2 !important; }
 
-/* Theme: Lavanda Silvestre - Lilac Violet & Sunflower Spark */
-[data-palette="lavanda"] {
-  background-color: #faf7ff !important;
-  color: #1e152a !important;
+/* 3. Romance Floral (Rose Quartz & Pink) */
+[data-palette="romance"],
+:root[data-palette="romance"] {
+  --palette-primary: #be185d;
+  --palette-primary-dark: #9d174d;
+  --palette-primary-hover: #831843;
+  --palette-accent: #e11d48;
+  --palette-yellow: #fbcfe8;
+  --palette-cream: #fff1f2;
+  --palette-warm: #fce7f3;
+  --palette-sand: #fffafb;
+  --palette-border: #f3d3df;
+  --palette-dark-accent: #831843;
+  --palette-dark: #3b0721;
+  --palette-muted: #831843;
+  --palette-dot: #ebd0dc;
+  --palette-connector: linear-gradient(180deg, #be185d 0%, #f472b6 100%);
 }
-[data-palette="lavanda"] .text-\[\#b45309\] { color: #7c3aed !important; }
-[data-palette="lavanda"] .bg-\[\#b45309\] { background-color: #7c3aed !important; }
-[data-palette="lavanda"] .hover\:bg-\[\#d97706\]:hover { background-color: #6d28d9 !important; }
-[data-palette="lavanda"] .border-\[\#b45309\] { border-color: #7c3aed !important; }
-[data-palette="lavanda"] .bg-\[\#fdfbf7\] { background-color: #faf7ff !important; }
-[data-palette="lavanda"] .bg-\[\#fffbeb\] { background-color: #f5f3ff !important; }
-[data-palette="lavanda"] .bg-\[\#fef3c7\] { background-color: #ede9fe !important; }
-[data-palette="lavanda"] .text-\[\#451a03\] { color: #5b21b6 !important; }
-[data-palette="lavanda"] .border-\[\#e7e2d7\] { border-color: #ddd6fe !important; }
 
-/* Theme: Atardecer Dorado - Sunset Terracotta & Warm Amber */
-[data-palette="atardecer"] {
-  background-color: #fff9f5 !important;
-  color: #2c1810 !important;
+/* 4. Lavanda Silvestre (Lilac Violet) */
+[data-palette="lavanda"],
+:root[data-palette="lavanda"] {
+  --palette-primary: #7c3aed;
+  --palette-primary-dark: #6d28d9;
+  --palette-primary-hover: #5b21b6;
+  --palette-accent: #8b5cf6;
+  --palette-yellow: #ddd6fe;
+  --palette-cream: #f5f3ff;
+  --palette-warm: #ede9fe;
+  --palette-sand: #faf7ff;
+  --palette-border: #ded7f7;
+  --palette-dark-accent: #4c1d95;
+  --palette-dark: #1e1338;
+  --palette-muted: #5b21b6;
+  --palette-dot: #ded5f5;
+  --palette-connector: linear-gradient(180deg, #7c3aed 0%, #a78bfa 100%);
 }
-[data-palette="atardecer"] .text-\[\#b45309\] { color: #c2410c !important; }
-[data-palette="atardecer"] .bg-\[\#b45309\] { background-color: #c2410c !important; }
-[data-palette="atardecer"] .hover\:bg-\[\#d97706\]:hover { background-color: #9a3412 !important; }
-[data-palette="atardecer"] .border-\[\#b45309\] { border-color: #c2410c !important; }
-[data-palette="atardecer"] .bg-\[\#fdfbf7\] { background-color: #fff9f5 !important; }
-[data-palette="atardecer"] .bg-\[\#fffbeb\] { background-color: #fff7ed !important; }
-[data-palette="atardecer"] .bg-\[\#fef3c7\] { background-color: #ffedd5 !important; }
-[data-palette="atardecer"] .text-\[\#451a03\] { color: #7c2d12 !important; }
-[data-palette="atardecer"] .border-\[\#e7e2d7\] { border-color: #fed7aa !important; }
 
-/* Theme: Océano Serena - Cerulean Blue & Sunflower */
-[data-palette="oceano"] {
-  background-color: #f4f9fd !important;
-  color: #0c2033 !important;
+/* 5. Atardecer Dorado (Sunset Terracotta & Orange) */
+[data-palette="atardecer"],
+:root[data-palette="atardecer"] {
+  --palette-primary: #c2410c;
+  --palette-primary-dark: #9a3412;
+  --palette-primary-hover: #7c2d12;
+  --palette-accent: #ea580c;
+  --palette-yellow: #fed7aa;
+  --palette-cream: #fff7ed;
+  --palette-warm: #ffedd5;
+  --palette-sand: #fff9f5;
+  --palette-border: #f8d5bb;
+  --palette-dark-accent: #7c2d12;
+  --palette-dark: #311409;
+  --palette-muted: #87381b;
+  --palette-dot: #edd0bd;
+  --palette-connector: linear-gradient(180deg, #c2410c 0%, #f97316 100%);
 }
-[data-palette="oceano"] .text-\[\#b45309\] { color: #0369a1 !important; }
-[data-palette="oceano"] .bg-\[\#b45309\] { background-color: #0369a1 !important; }
-[data-palette="oceano"] .hover\:bg-\[\#d97706\]:hover { background-color: #075985 !important; }
-[data-palette="oceano"] .border-\[\#b45309\] { border-color: #0369a1 !important; }
-[data-palette="oceano"] .bg-\[\#fdfbf7\] { background-color: #f4f9fd !important; }
-[data-palette="oceano"] .bg-\[\#fffbeb\] { background-color: #f0f9ff !important; }
-[data-palette="oceano"] .bg-\[\#fef3c7\] { background-color: #e0f2fe !important; }
-[data-palette="oceano"] .text-\[\#451a03\] { color: #075985 !important; }
-[data-palette="oceano"] .border-\[\#e7e2d7\] { border-color: #bae6fd !important; }
 
-/* Theme: Tierra & Arcilla - Rustic Terracotta & Earth */
-[data-palette="terracota"] {
-  background-color: #fdf8f5 !important;
-  color: #27140b !important;
+/* 6. Océano Serena (Cerulean Blue) */
+[data-palette="oceano"],
+:root[data-palette="oceano"] {
+  --palette-primary: #0284c7;
+  --palette-primary-dark: #0369a1;
+  --palette-primary-hover: #075985;
+  --palette-accent: #0ea5e9;
+  --palette-yellow: #bae6fd;
+  --palette-cream: #f0f9ff;
+  --palette-warm: #e0f2fe;
+  --palette-sand: #f4f9fd;
+  --palette-border: #cbe6f7;
+  --palette-dark-accent: #0c4a6e;
+  --palette-dark: #082f49;
+  --palette-muted: #0369a1;
+  --palette-dot: #c7e0f2;
+  --palette-connector: linear-gradient(180deg, #0284c7 0%, #38bdf8 100%);
 }
-[data-palette="terracota"] .text-\[\#b45309\] { color: #9a3412 !important; }
-[data-palette="terracota"] .bg-\[\#b45309\] { background-color: #9a3412 !important; }
-[data-palette="terracota"] .hover\:bg-\[\#d97706\]:hover { background-color: #7c2d12 !important; }
-[data-palette="terracota"] .border-\[\#b45309\] { border-color: #9a3412 !important; }
-[data-palette="terracota"] .bg-\[\#fdfbf7\] { background-color: #fdf8f5 !important; }
-[data-palette="terracota"] .bg-\[\#fffbeb\] { background-color: #faf5f0 !important; }
-[data-palette="terracota"] .bg-\[\#fef3c7\] { background-color: #fed7aa !important; }
-[data-palette="terracota"] .text-\[\#451a03\] { color: #7c2d12 !important; }
-[data-palette="terracota"] .border-\[\#e7e2d7\] { border-color: #e2d3c7 !important; }
 
-/* Theme: Noche Mágica - Obsidian Dark & Radiant Gold */
+/* 7. Tierra & Arcilla (Rustic Terracotta & Earth) */
+[data-palette="terracota"],
+:root[data-palette="terracota"] {
+  --palette-primary: #9a3412;
+  --palette-primary-dark: #7c2d12;
+  --palette-primary-hover: #5e1d08;
+  --palette-accent: #b45309;
+  --palette-yellow: #fed7aa;
+  --palette-cream: #faf5f0;
+  --palette-warm: #f5ece3;
+  --palette-sand: #fdf8f5;
+  --palette-border: #e6d6cb;
+  --palette-dark-accent: #451a03;
+  --palette-dark: #2a1205;
+  --palette-muted: #6c3b1a;
+  --palette-dot: #e0cebf;
+  --palette-connector: linear-gradient(180deg, #9a3412 0%, #d97706 100%);
+}
+
+/* 8. Noche de Gala (Obsidian Dark & Radiant Gold) */
+[data-palette="noche"],
+:root[data-palette="noche"] {
+  --palette-primary: #f59e0b;
+  --palette-primary-dark: #d97706;
+  --palette-primary-hover: #b45309;
+  --palette-accent: #fbbf24;
+  --palette-yellow: #78350f;
+  --palette-cream: #1e1b18;
+  --palette-warm: #29241f;
+  --palette-sand: #12100e;
+  --palette-border: #332c25;
+  --palette-dark-accent: #fef08a;
+  --palette-dark: #f5f5f4;
+  --palette-muted: #a8a29e;
+  --palette-dot: #2c2722;
+  --palette-connector: linear-gradient(180deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+/* ==========================================================================
+   DYNAMIC PALETTE PROPAGATION & COMPONENT STYLING
+   ========================================================================== */
+
+/* Propagate to Kajel Theme Variables */
+[data-palette] {
+  --color-kajel-amber: var(--palette-primary);
+  --color-kajel-amber-dark: var(--palette-primary-dark);
+  --color-kajel-amber-hover: var(--palette-primary-hover);
+  --color-kajel-gold: var(--palette-accent);
+  --color-kajel-yellow: var(--palette-yellow);
+  --color-kajel-cream: var(--palette-cream);
+  --color-kajel-warm: var(--palette-warm);
+  --color-kajel-sand: var(--palette-sand);
+  --color-kajel-border: var(--palette-border);
+  --color-kajel-brown: var(--palette-dark-accent);
+  --color-kajel-dark: var(--palette-dark);
+  --color-kajel-muted: var(--palette-muted);
+}
+
+/* Base canvas background and text synchronization */
+[data-palette]:not([data-palette="girasol"]) {
+  background-color: var(--palette-sand) !important;
+  color: var(--palette-dark) !important;
+}
+
+/* Primary Color mappings */
+[data-palette]:not([data-palette="girasol"]) [class*="text-[#b45309]"],
+[data-palette]:not([data-palette="girasol"]) .text-kajel-amber {
+  color: var(--palette-primary) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="hover:text-[#b45309]"]:hover {
+  color: var(--palette-primary) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="bg-[#b45309]"],
+[data-palette]:not([data-palette="girasol"]) .bg-kajel-amber {
+  background-color: var(--palette-primary) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="hover:bg-[#d97706]"]:hover,
+[data-palette]:not([data-palette="girasol"]) [class*="hover:bg-kajel-amber-dark"]:hover {
+  background-color: var(--palette-primary-hover) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="border-[#b45309]"],
+[data-palette]:not([data-palette="girasol"]) [class*="focus:border-[#b45309]"]:focus,
+[data-palette]:not([data-palette="girasol"]) .border-kajel-amber {
+  border-color: var(--palette-primary) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="ring-[#b45309]"],
+[data-palette]:not([data-palette="girasol"]) [class*="focus:ring-[#b45309]"]:focus {
+  --tw-ring-color: var(--palette-primary) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="fill-[#b45309]"] {
+  fill: var(--palette-primary) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="from-[#b45309]"] {
+  --tw-gradient-from: var(--palette-primary) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="to-[#d97706]"] {
+  --tw-gradient-to: var(--palette-primary-hover) !important;
+}
+
+/* Secondary & Accents */
+[data-palette]:not([data-palette="girasol"]) [class*="bg-[#f59e0b]"],
+[data-palette]:not([data-palette="girasol"]) [class*="bg-amber-500"],
+[data-palette]:not([data-palette="girasol"]) .bg-kajel-gold {
+  background-color: var(--palette-accent) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="text-[#f59e0b]"],
+[data-palette]:not([data-palette="girasol"]) [class*="text-amber-500"],
+[data-palette]:not([data-palette="girasol"]) [class*="text-amber-600"],
+[data-palette]:not([data-palette="girasol"]) .text-kajel-gold {
+  color: var(--palette-accent) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="fill-[#f59e0b]"] {
+  fill: var(--palette-accent) !important;
+}
+
+/* Light / Warm Backgrounds & Cards */
+[data-palette]:not([data-palette="girasol"]) [class*="bg-[#fffbeb]"],
+[data-palette]:not([data-palette="girasol"]) [class*="bg-amber-50"],
+[data-palette]:not([data-palette="girasol"]) .bg-kajel-cream {
+  background-color: var(--palette-cream) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="from-[#fffbeb]"] {
+  --tw-gradient-from: var(--palette-cream) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="bg-[#fef3c7]"],
+[data-palette]:not([data-palette="girasol"]) [class*="bg-amber-100"],
+[data-palette]:not([data-palette="girasol"]) .bg-kajel-warm {
+  background-color: var(--palette-warm) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="hover:bg-[#fef3c7]"]:hover {
+  background-color: var(--palette-warm) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="hover:bg-[#fde68a]"]:hover {
+  background-color: var(--palette-yellow) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="bg-[#fde68a]"],
+[data-palette]:not([data-palette="girasol"]) [class*="bg-[#fef08a]"],
+[data-palette]:not([data-palette="girasol"]) .bg-kajel-yellow {
+  background-color: var(--palette-yellow) !important;
+}
+
+/* Dark accents & text inside chips/badges */
+[data-palette]:not([data-palette="girasol"]) [class*="text-[#451a03]"],
+[data-palette]:not([data-palette="girasol"]) [class*="text-[#78350f]"],
+[data-palette]:not([data-palette="girasol"]) .text-kajel-brown {
+  color: var(--palette-dark-accent) !important;
+}
+
+[data-palette]:not([data-palette="girasol"]) [class*="fill-[#78350f]"] {
+  fill: var(--palette-dark-accent) !important;
+}
+
+/* Borders */
+[data-palette]:not([data-palette="girasol"]) [class*="border-[#e7e2d7]"],
+[data-palette]:not([data-palette="girasol"]) [class*="border-amber-200"],
+[data-palette]:not([data-palette="girasol"]) .border-kajel-border {
+  border-color: var(--palette-border) !important;
+}
+
+/* Background Canvas */
+[data-palette]:not([data-palette="girasol"]) [class*="bg-[#fdfbf7]"],
+[data-palette]:not([data-palette="girasol"]) .bg-kajel-sand {
+  background-color: var(--palette-sand) !important;
+}
+
+/* ==========================================================================
+   ESPECIAL: NOCHE DE GALA (DARK LUXURY OBSIDIAN MODE)
+   ========================================================================== */
 [data-palette="noche"] {
   background-color: #12100e !important;
+  color: #f5f5f4 !important;
+}
+
+[data-palette="noche"] [class*="bg-white"],
+[data-palette="noche"] header,
+[data-palette="noche"] .bg-white {
+  background-color: #1a1714 !important;
+  color: #f5f5f4 !important;
+}
+
+[data-palette="noche"] [class*="bg-[#ffffff]"] {
+  background-color: rgba(26, 23, 20, 0.95) !important;
+}
+
+[data-palette="noche"] [class*="text-[#1c1917]"],
+[data-palette="noche"] .text-kajel-dark {
   color: #fafaf9 !important;
 }
+
+[data-palette="noche"] [class*="text-[#57534e]"],
+[data-palette="noche"] .text-kajel-muted {
+  color: #d6d3d1 !important;
+}
+
+[data-palette="noche"] [class*="text-[#78716c]"] {
+  color: #a8a29e !important;
+}
+
+[data-palette="noche"] [class*="bg-stone-50"] {
+  background-color: #24201c !important;
+}
+
+[data-palette="noche"] [class*="border-[#e7e2d7]"] {
+  border-color: #332c25 !important;
+}
+
 [data-palette="noche"] .custom-blueprint-bg {
   background-color: #12100e !important;
-  background-image: radial-gradient(#2e2a25 0.75px, transparent 0.75px), radial-gradient(#2e2a25 0.75px, #12100e 0.75px) !important;
+  background-image: radial-gradient(#2c2722 0.75px, transparent 0.75px), radial-gradient(#2c2722 0.75px, #12100e 0.75px) !important;
 }
-[data-palette="noche"] .node-connector-line {
-  background: linear-gradient(180deg, #f59e0b 0%, #fbbf24 100%) !important;
-}
-[data-palette="noche"] .bg-\[\#fdfbf7\] { background-color: #12100e !important; }
-[data-palette="noche"] .bg-white { background-color: #1c1917 !important; color: #f5f5f4 !important; }
-[data-palette="noche"] .bg-\[\#ffffff\]\/95 { background-color: rgba(28, 25, 23, 0.95) !important; }
-[data-palette="noche"] .bg-\[\#fffbeb\] { background-color: #24201c !important; }
-[data-palette="noche"] .bg-\[\#fef3c7\] { background-color: #332815 !important; color: #fef08a !important; }
-[data-palette="noche"] .text-\[\#1c1917\] { color: #fafaf9 !important; }
-[data-palette="noche"] .text-\[\#57534e\] { color: #d6d3d1 !important; }
-[data-palette="noche"] .text-\[\#78716c\] { color: #a8a29e !important; }
-[data-palette="noche"] .border-\[\#e7e2d7\] { border-color: #2d2722 !important; }
-[data-palette="noche"] .border-\[\#e7e2d7\]\/40 { border-color: rgba(45, 39, 34, 0.6) !important; }
-[data-palette="noche"] .border-\[\#e7e2d7\]\/30 { border-color: rgba(45, 39, 34, 0.4) !important; }
-[data-palette="noche"] .text-\[\#451a03\] { color: #fef08a !important; }
 

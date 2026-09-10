@@ -15,7 +15,30 @@ export default function App() {
   const [activeScreen, setActiveScreen] = useState<ActiveScreen>('home');
   const [selectedProduct, setSelectedProduct] = useState<Product>(PRODUCTS[2]); // Default to Gift Box V1
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-  const [currentPalette, setCurrentPalette] = useState<ColorPalette>('girasol');
+  // Color palette state persisted in localStorage
+  const [currentPalette, setCurrentPalette] = useState<ColorPalette>(() => {
+    try {
+      const saved = localStorage.getItem('kajel_palette');
+      const validPalettes: ColorPalette[] = ['girasol', 'botanico', 'romance', 'lavanda', 'atardecer', 'oceano', 'terracota', 'noche'];
+      if (saved && validPalettes.includes(saved as ColorPalette)) {
+        return saved as ColorPalette;
+      }
+    } catch {
+      // ignore
+    }
+    return 'girasol';
+  });
+
+  // Sync currentPalette with localStorage and root DOM element
+  useEffect(() => {
+    try {
+      localStorage.setItem('kajel_palette', currentPalette);
+    } catch {
+      // ignore
+    }
+    document.documentElement.setAttribute('data-palette', currentPalette);
+    document.body.setAttribute('data-palette', currentPalette);
+  }, [currentPalette]);
   
   // Cart state: empty by default, persists only items explicitly added by the user
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
