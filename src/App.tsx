@@ -38,8 +38,13 @@ export default function App() {
   return (
     <div
       data-palette="girasol"
-      className="min-h-screen flex flex-col bg-[#fdfbf7] text-[#1c1917] selection:bg-[#f59e0b] selection:text-[#451a03]"
+      className="min-h-screen flex flex-col bg-gradient-to-b from-[#fef7e6] via-[#fffdf5] to-[#fef2d3] text-[#1c1917] selection:bg-[#f59e0b] selection:text-[#451a03] relative overflow-x-hidden"
     >
+      {/* Warm Ambient Glow Atmosphere in Background */}
+      <div className="fixed top-[-100px] left-[10%] w-[550px] h-[550px] bg-[#fde68a]/40 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="fixed top-[35%] right-[-120px] w-[600px] h-[600px] bg-[#f59e0b]/15 rounded-full blur-[150px] pointer-events-none -z-10" />
+      <div className="fixed bottom-[10%] left-[-100px] w-[500px] h-[500px] bg-[#fef08a]/35 rounded-full blur-[130px] pointer-events-none -z-10" />
+
       {/* 1. DISTRACTION-FREE LANDING HEADER */}
       <TopToolbar onScrollToCatalog={handleScrollToCatalog} />
 

@@ -22,6 +22,7 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #fef8ea;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -67,7 +68,7 @@
   --palette-yellow: #fde68a;
   --palette-cream: #fffbeb;
   --palette-warm: #fef3c7;
-  --palette-sand: #fdfbf7;
+  --palette-sand: #fef8ea;
   --palette-border: #e7e2d7;
   --palette-dark-accent: #451a03;
   --palette-dark: #1c1917;
