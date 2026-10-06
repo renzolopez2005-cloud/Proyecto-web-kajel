@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Product } from '../types';
 import { 
   PRODUCTS, 
@@ -18,8 +18,6 @@ import {
   CheckCircle2,
   ChevronDown,
   ChevronUp,
-  ChevronLeft,
-  ChevronRight,
   MapPin,
   CreditCard
 } from 'lucide-react';
@@ -44,16 +42,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   // Catalog filtering state
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [searchQuery] = useState<string>('');
-
-  // Pasarela horizontal scroll ref & handler
-  const pasarelaRef = useRef<HTMLDivElement>(null);
-
-  const scrollPasarela = (direction: 'left' | 'right') => {
-    if (pasarelaRef.current) {
-      const scrollAmount = direction === 'left' ? -350 : 350;
-      pasarelaRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
 
   // District calculator state
   const [selectedDistrict, setSelectedDistrict] = useState<string>(LIMA_DISTRICTS[0].name);
@@ -302,55 +290,35 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </section>
 
-      {/* 4. PRODUCT CATALOG IN PASARELA (Horizontal runway avoiding excess vertical spacing) */}
-      <section id="catalogo" aria-label="Pasarela de Ramos y Boxes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-5">
-        {/* Header of the catalog pasarela */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-2 max-w-xl">
+      {/* 4. PRODUCT CATALOG - COMPACT 4-COLUMN VIEW (All visible without scrolling/sliding) */}
+      <section id="catalogo" aria-label="Catálogo de Ramos y Boxes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-5">
+        {/* Header of the catalog */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-center sm:text-left">
+          <div className="space-y-1.5">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
               <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-              <span>Colección de Flores Amarillas Hechas a Mano</span>
+              <span>Colección Exclusiva de Flores Eternas</span>
             </div>
             <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
-              Pasarela de Ramos y Gift Boxes
+              Nuestros 4 Diseños Disponibles
             </h2>
             <p className="text-xs md:text-sm text-[#57534e]">
-              Confeccionados en chenille aterciopelado con luces de hada y dedicatoria. Desliza para explorar todos los modelos sin desplazarte de más.
+              Elige tu arreglo favorito confeccionado en chenille aterciopelado con luces de hada y dedicatoria.
             </p>
           </div>
 
-          {/* Pasarela Navigation Arrow Controls */}
-          <div className="flex items-center gap-2 shrink-0 self-end md:self-auto">
-            <span className="text-xs text-[#78716c] font-medium hidden sm:inline mr-2">
-              {filteredProducts.length} modelos
-            </span>
-            <button
-              type="button"
-              onClick={() => scrollPasarela('left')}
-              className="w-10 h-10 rounded-full bg-white hover:bg-[#fffbeb] active:bg-amber-100 border border-[#e7e2d7] text-[#57534e] hover:text-[#b45309] flex items-center justify-center shadow-xs transition-colors cursor-pointer"
-              aria-label="Ver productos anteriores"
-              title="Anterior"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollPasarela('right')}
-              className="w-10 h-10 rounded-full bg-[#b45309] hover:bg-[#d97706] active:bg-[#78350f] text-white flex items-center justify-center shadow-xs transition-colors cursor-pointer"
-              aria-label="Ver siguientes productos"
-              title="Siguiente"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+          {/* Quick Counter */}
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#e7e2d7] text-xs font-bold text-[#b45309] shadow-2xs">
+            <span>{filteredProducts.length} de {PRODUCTS.length} modelos</span>
           </div>
         </div>
 
         {/* Filter Chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar justify-start sm:justify-start">
           <button
             type="button"
             onClick={() => setFilterCategory('all')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               filterCategory === 'all'
                 ? 'bg-[#b45309] text-white shadow-xs'
                 : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
@@ -361,7 +329,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           <button
             type="button"
             onClick={() => setFilterCategory('boxes')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               filterCategory === 'boxes'
                 ? 'bg-[#b45309] text-white shadow-xs'
                 : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
@@ -372,7 +340,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           <button
             type="button"
             onClick={() => setFilterCategory('jewelry')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               filterCategory === 'jewelry'
                 ? 'bg-[#b45309] text-white shadow-xs'
                 : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
@@ -383,7 +351,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           <button
             type="button"
             onClick={() => setFilterCategory('ramos')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               filterCategory === 'ramos'
                 ? 'bg-[#b45309] text-white shadow-xs'
                 : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
@@ -393,24 +361,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </button>
         </div>
 
-        {/* Pasarela Horizontal Scroll Track */}
-        <div 
-          ref={pasarelaRef}
-          className="flex items-stretch gap-5 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth"
-          style={{ scrollbarWidth: 'thin' }}
-        >
+        {/* Compact Grid: All products displayed side-by-side (2 cols on mobile, 4 cols on tablet/desktop) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {filteredProducts.map((product) => {
             const whatsAppLink = createProductWhatsAppLink(product);
             return (
               <div 
                 key={product.id}
-                className="w-[280px] sm:w-[320px] md:w-[335px] shrink-0 snap-start rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
+                className="rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group hover:-translate-y-0.5 duration-200"
               >
                 <div>
-                  {/* Photo Container */}
+                  {/* Photo Container - Compact height */}
                   <div 
                     onClick={() => onSelectProduct(product)}
-                    className="relative aspect-4/3 overflow-hidden bg-[#fffbeb] cursor-pointer"
+                    className="relative aspect-square sm:aspect-4/3 max-h-40 sm:max-h-44 overflow-hidden bg-[#fffbeb] cursor-pointer"
                   >
                     <img 
                       src={product.image} 
@@ -418,45 +382,45 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                     />
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#fef08a] text-[#451a03] shadow-xs">
+                    <div className="absolute top-2 left-2">
+                      <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#fef08a] text-[#451a03] shadow-xs">
                         {product.tag}
                       </span>
                     </div>
                   </div>
 
-                  {/* Body Content */}
-                  <div className="p-4 space-y-2.5">
-                    <div className="flex items-baseline justify-between gap-2">
+                  {/* Body Content - Compact padding & typography */}
+                  <div className="p-3 sm:p-3.5 space-y-2">
+                    <div>
                       <h3 
                         onClick={() => onSelectProduct(product)}
-                        className="font-headline text-base font-bold text-[#1c1917] group-hover:text-[#b45309] transition-colors cursor-pointer truncate"
+                        className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] group-hover:text-[#b45309] transition-colors cursor-pointer line-clamp-1"
                         title={product.name}
                       >
                         {product.name}
                       </h3>
-                      <div className="text-right shrink-0">
-                        <span className="text-[11px] text-[#78716c] line-through block leading-none">
-                          S/ {product.normalPrice.toFixed(2)}
-                        </span>
-                        <span className="font-headline text-base font-bold text-[#b45309]">
+                      <div className="flex items-baseline gap-1.5 mt-0.5">
+                        <span className="font-headline text-sm sm:text-base font-bold text-[#b45309]">
                           S/ {product.price.toFixed(2)}
+                        </span>
+                        <span className="text-[10px] text-[#78716c] line-through">
+                          S/ {product.normalPrice.toFixed(2)}
                         </span>
                       </div>
                     </div>
 
-                    <p className="text-xs text-[#57534e] line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-[#57534e] line-clamp-2 leading-relaxed">
                       {product.description}
                     </p>
 
-                    {/* Inclusions pill list */}
-                    <div className="bg-[#fffbeb] p-2.5 rounded-xl space-y-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#b45309] block">
-                        Incluye en el paquete:
+                    {/* Inclusions pill list - compact */}
+                    <div className="bg-[#fffbeb] p-2 rounded-xl">
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-[#b45309] block mb-0.5">
+                        Incluye:
                       </span>
-                      <ul className="space-y-0.5 text-[11px] text-[#57534e]">
-                        {product.inclusions.slice(0, 3).map((inc, i) => (
-                          <li key={i} className="flex items-center gap-1.5">
+                      <ul className="space-y-0.5 text-[10px] text-[#57534e]">
+                        {product.inclusions.slice(0, 2).map((inc, i) => (
+                          <li key={i} className="flex items-center gap-1">
                             <span className="w-1 h-1 rounded-full bg-[#f59e0b] shrink-0" />
                             <span className="truncate">{inc}</span>
                           </li>
@@ -466,25 +430,25 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   </div>
                 </div>
 
-                {/* Single Unified High-Converting CTA Button */}
-                <div className="p-4 pt-0 space-y-2">
+                {/* Compact Action Buttons */}
+                <div className="p-3 sm:p-3.5 pt-0 space-y-1.5">
                   <a
                     href={whatsAppLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-2.5 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da850] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs hover:shadow-md transition-all active:scale-[0.98]"
+                    className="w-full py-2 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da850] text-white rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-[0.98]"
                   >
-                    <MessageCircle className="w-4 h-4 fill-white" />
-                    <span>Pedir por WhatsApp (S/ {product.price.toFixed(2)})</span>
+                    <MessageCircle className="w-3.5 h-3.5 fill-white shrink-0" />
+                    <span className="truncate">Pedir por WhatsApp</span>
                   </a>
 
                   <button
                     type="button"
                     onClick={() => onSelectProduct(product)}
-                    className="w-full py-2 bg-[#fffbeb] hover:bg-[#fef3c7] text-[#b45309] rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors border border-[#e7e2d7]/60 cursor-pointer"
+                    className="w-full py-1.5 bg-[#fffbeb] hover:bg-[#fef3c7] text-[#b45309] rounded-xl text-[10px] sm:text-[11px] font-semibold flex items-center justify-center gap-1 transition-colors border border-[#e7e2d7]/60 cursor-pointer"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-                    <span>Ver fotos y dedicatoria</span>
+                    <Sparkles className="w-3 h-3 text-[#b45309]" />
+                    <span>Ver fotos y detalles</span>
                   </button>
                 </div>
               </div>
