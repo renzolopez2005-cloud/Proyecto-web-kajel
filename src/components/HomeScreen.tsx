@@ -293,24 +293,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       {/* 4. PRODUCT CATALOG - COMPACT 4-COLUMN VIEW (All visible without scrolling/sliding) */}
       <section id="catalogo" aria-label="Catálogo de Ramos y Boxes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-5">
         {/* Header of the catalog */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-center sm:text-left">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-              <span>Colección Exclusiva de Flores Eternas</span>
-            </div>
-            <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
-              Nuestros 4 Diseños Disponibles
-            </h2>
-            <p className="text-xs md:text-sm text-[#57534e]">
-              Elige tu arreglo favorito confeccionado en chenille aterciopelado con luces de hada y dedicatoria.
-            </p>
+        <div className="text-center sm:text-left space-y-1.5 max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
+            <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
+            <span>Colección Exclusiva de Flores Eternas</span>
           </div>
-
-          {/* Quick Counter */}
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#e7e2d7] text-xs font-bold text-[#b45309] shadow-2xs">
-            <span>{filteredProducts.length} de {PRODUCTS.length} modelos</span>
-          </div>
+          <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
+            Nuestros 4 Diseños Disponibles
+          </h2>
+          <p className="text-xs md:text-sm text-[#57534e]">
+            Elige tu arreglo favorito confeccionado en chenille aterciopelado con luces de hada y dedicatoria.
+          </p>
         </div>
 
         {/* Filter Chips */}
