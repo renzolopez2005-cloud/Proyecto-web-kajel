@@ -10,7 +10,8 @@ import {
   Truck,
   HelpCircle,
   BookOpen,
-  Home
+  Home,
+  Mail
 } from 'lucide-react';
 
 interface TopToolbarProps {
@@ -70,7 +71,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
           </div>
         </div>
 
-        {/* Desktop Navigation Links - Reordered: Inicio -> Beneficios -> Catálogo -> Envíos -> Preguntas -> Sobre Nosotros */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
           <button
             onClick={() => handleNavClick('top')}
@@ -103,6 +104,12 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             Preguntas
           </button>
           <button
+            onClick={() => handleNavClick('contacto')}
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#57534e] hover:text-[#b45309] hover:bg-[#fffbeb] transition-colors cursor-pointer"
+          >
+            Contacto
+          </button>
+          <button
             onClick={handleAboutClick}
             className="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#b45309] hover:bg-[#fef3c7] transition-colors cursor-pointer"
           >
@@ -110,7 +117,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
           </button>
         </nav>
 
-        {/* Right Actions: Direct WhatsApp Conversion CTA (Without Palette distraction) */}
+        {/* Right Actions: Direct WhatsApp Conversion CTA */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Direct WhatsApp Order CTA Button */}
           <a
@@ -178,6 +185,13 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
           >
             <HelpCircle className="w-4 h-4 text-[#b45309]" />
             <span>Preguntas Frecuentes</span>
+          </button>
+          <button
+            onClick={() => handleNavClick('contacto')}
+            className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-left text-xs font-semibold text-[#1c1917] hover:bg-[#fffbeb] hover:text-[#b45309] transition-colors"
+          >
+            <Mail className="w-4 h-4 text-[#b45309]" />
+            <span>Formulario de Contacto</span>
           </button>
           <button
             onClick={handleAboutClick}

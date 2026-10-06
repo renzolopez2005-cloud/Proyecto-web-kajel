@@ -19,7 +19,10 @@ import {
   ChevronDown,
   ChevronUp,
   MapPin,
-  CreditCard
+  CreditCard,
+  Mail,
+  Send,
+  User
 } from 'lucide-react';
 import { 
   ChenilleSunflowerIcon, 
@@ -49,6 +52,30 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
   // FAQ accordion state
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  // Contact form state
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+  const [isContactSubmitted, setIsContactSubmitted] = useState(false);
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) return;
+    setIsSubmittingContact(true);
+    setTimeout(() => {
+      setIsSubmittingContact(false);
+      setIsContactSubmitted(true);
+    }, 450);
+  };
+
+  const handleResetContact = () => {
+    setContactName('');
+    setContactEmail('');
+    setContactMessage('');
+    setIsContactSubmitted(false);
+  };
 
   // Filtered products list
   const filteredProducts = useMemo(() => {
@@ -628,7 +655,137 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </section>
 
-      {/* 9. DISCREET CRAFT STORY CARD & BUTTON (Goes to dedicated About page) */}
+      {/* 9. CONTACT FORM SECTION */}
+      <section id="contacto" aria-label="Formulario de contacto" className="max-w-3xl mx-auto px-4 md:px-8 space-y-6">
+        <div className="text-center space-y-2 max-w-xl mx-auto">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold shadow-2xs">
+            <Mail className="w-3.5 h-3.5 text-[#b45309]" />
+            <span>Atención Directa y Personalizada</span>
+          </div>
+          <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
+            Envíanos un Mensaje
+          </h2>
+          <p className="text-xs md:text-sm text-[#57534e]">
+            ¿Tienes alguna consulta especial sobre dedicatorias, modelos o fechas de entrega? Escríbenos y te responderemos a la brevedad.
+          </p>
+        </div>
+
+        {isContactSubmitted ? (
+          <div className="bg-white rounded-3xl border border-[#e7e2d7]/80 p-8 sm:p-10 shadow-xs text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-2xs">
+              <CheckCircle2 className="w-7 h-7" />
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="font-headline text-xl font-bold text-[#1c1917]">
+                ¡Mensaje Enviado con Éxito!
+              </h3>
+              <p className="text-xs text-[#57534e] max-w-md mx-auto leading-relaxed">
+                Muchas gracias por escribirnos, <strong className="text-[#1c1917]">{contactName}</strong>. Hemos recibido tu mensaje y te responderemos a <strong className="text-[#1c1917]">{contactEmail}</strong> a la brevedad.
+              </p>
+            </div>
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={handleResetContact}
+                className="px-5 py-2.5 rounded-xl border border-[#e7e2d7] bg-white hover:bg-[#fffbeb] text-xs font-semibold text-[#57534e] transition-colors cursor-pointer"
+              >
+                Enviar otro mensaje
+              </button>
+              <a
+                href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(`Hola Kajel, soy ${contactName}. Les envié un mensaje por el formulario web: "${contactMessage}"`)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da850] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-xs transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 fill-white" />
+                <span>Chatear ahora por WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        ) : (
+          <form 
+            onSubmit={handleContactSubmit}
+            className="bg-white rounded-3xl border border-[#e7e2d7]/80 p-6 sm:p-8 shadow-xs space-y-4"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Nombre */}
+              <div className="space-y-1.5">
+                <label htmlFor="contact-name" className="block text-xs font-bold text-[#1c1917]">
+                  Nombre <span className="text-[#b45309]">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#a8a29e]">
+                    <User className="w-4 h-4" />
+                  </div>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    required
+                    value={contactName}
+                    onChange={(e) => setContactName(e.target.value)}
+                    placeholder="Tu nombre completo"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#e7e2d7] bg-[#fffbeb]/20 text-xs text-[#1c1917] placeholder:text-[#a8a29e] focus:outline-none focus:ring-2 focus:ring-[#f59e0b]/50 focus:border-[#b45309] transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="space-y-1.5">
+                <label htmlFor="contact-email" className="block text-xs font-bold text-[#1c1917]">
+                  Email <span className="text-[#b45309]">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#a8a29e]">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    required
+                    value={contactEmail}
+                    onChange={(e) => setContactEmail(e.target.value)}
+                    placeholder="tuemail@ejemplo.com"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#e7e2d7] bg-[#fffbeb]/20 text-xs text-[#1c1917] placeholder:text-[#a8a29e] focus:outline-none focus:ring-2 focus:ring-[#f59e0b]/50 focus:border-[#b45309] transition-all"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Mensaje */}
+            <div className="space-y-1.5">
+              <label htmlFor="contact-message" className="block text-xs font-bold text-[#1c1917]">
+                Mensaje <span className="text-[#b45309]">*</span>
+              </label>
+              <textarea
+                id="contact-message"
+                required
+                rows={4}
+                value={contactMessage}
+                onChange={(e) => setContactMessage(e.target.value)}
+                placeholder="Escribe tu mensaje, consulta sobre dedicatorias o detalles del pedido..."
+                className="w-full p-3 rounded-xl border border-[#e7e2d7] bg-[#fffbeb]/20 text-xs text-[#1c1917] placeholder:text-[#a8a29e] focus:outline-none focus:ring-2 focus:ring-[#f59e0b]/50 focus:border-[#b45309] transition-all resize-y min-h-[95px]"
+              />
+            </div>
+
+            {/* Botón para enviar */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#e7e2d7]/50">
+              <span className="text-[11px] text-[#78716c] text-center sm:text-left">
+                Atención rápida de lunes a domingo para todo Lima.
+              </span>
+              <button
+                type="submit"
+                disabled={isSubmittingContact}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#b45309] hover:bg-[#d97706] active:bg-[#78350f] disabled:opacity-60 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-xs hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>{isSubmittingContact ? 'Enviando...' : 'Enviar Mensaje'}</span>
+              </button>
+            </div>
+          </form>
+        )}
+      </section>
+
+      {/* 10. DISCREET CRAFT STORY CARD & BUTTON (Goes to dedicated About page) */}
       {onNavigateAbout && (
         <section className="max-w-4xl mx-auto px-4 md:px-8">
           <div className="rounded-3xl bg-[#fffbeb] border border-amber-200/80 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xs">
