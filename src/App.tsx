@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { ActiveScreen, Product, ProductVariant, CartItem, ColorPalette } from './types';
-import { PRODUCTS, WHATSAPP_PHONE, WHATSAPP_DISPLAY } from './data/products';
+import { Product, ColorPalette } from './types';
+import { PRODUCTS, WHATSAPP_PHONE } from './data/products';
 import { TopToolbar } from './components/TopToolbar';
 import { HomeScreen } from './components/HomeScreen';
 import { CatalogScreen } from './components/CatalogScreen';
-import { ProductDetailScreen } from './components/ProductDetailScreen';
 import { AboutScreen } from './components/AboutScreen';
 import { ContactScreen } from './components/ContactScreen';
-import { CartModal } from './components/CartModal';
+import { ProductDetailModal } from './components/ProductDetailModal';
 import { Footer } from './components/Footer';
-import { MessageCircle, ShoppingBag } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
 export default function App() {
-  const [activeScreen, setActiveScreen] = useState<ActiveScreen>('home');
-  const [selectedProduct, setSelectedProduct] = useState<Product>(PRODUCTS[2]); // Default to Gift Box V1
-  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
+
   // Color palette state persisted in localStorage
   const [currentPalette, setCurrentPalette] = useState<ColorPalette>(() => {
     try {
       const saved = localStorage.getItem('kajel_palette');
-      const validPalettes: ColorPalette[] = ['girasol', 'botanico', 'romance', 'lavanda', 'atardecer', 'oceano', 'terracota', 'noche'];
+      const validPalettes: ColorPalette[] = [
+        'girasol', 
+        'botanico', 
+        'romance', 
+        'lavanda', 
+        'atardecer', 
+        'oceano', 
+        'terracota', 
+        'noche'
+      ];
       if (saved && validPalettes.includes(saved as ColorPalette)) {
         return saved as ColorPalette;
       }
@@ -39,180 +47,88 @@ export default function App() {
     document.documentElement.setAttribute('data-palette', currentPalette);
     document.body.setAttribute('data-palette', currentPalette);
   }, [currentPalette]);
-  
-  // Cart state: empty by default, persists only items explicitly added by the user
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    try {
-      const saved = localStorage.getItem('kajel_cart_items');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          return parsed;
-        }
-      }
-    } catch {
-      // ignore
-    }
-    return [];
-  });
 
-  // Sync cart items with localStorage (clears storage when empty)
-  useEffect(() => {
-    try {
-      if (cartItems.length > 0) {
-        localStorage.setItem('kajel_cart_items', JSON.stringify(cartItems));
-      } else {
-        localStorage.removeItem('kajel_cart_items');
-      }
-    } catch {
-      // ignore
-    }
-  }, [cartItems]);
-
-  // Scroll to top when changing screens
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeScreen]);
-
-  const handleSelectProduct = (product: Product) => {
+  const handleOpenProductDetail = (product: Product) => {
     setSelectedProduct(product);
-    setActiveScreen('producto');
+    setIsDetailOpen(true);
   };
 
-  const handleAddToCart = (
-    product: Product,
-    variant?: ProductVariant,
-    quantity: number = 1,
-    dedication?: string
-  ) => {
-    setCartItems((prev) => {
-      // Check if same product and variant exist
-      const existingIdx = prev.findIndex(
-        (item) => item.product.id === product.id && item.selectedVariant?.id === variant?.id
-      );
-
-      if (existingIdx >= 0) {
-        const copy = [...prev];
-        copy[existingIdx].quantity += quantity;
-        if (dedication) copy[existingIdx].dedicationText = dedication;
-        return copy;
-      }
-
-      return [
-        ...prev,
-        {
-          product,
-          selectedVariant: variant,
-          quantity,
-          dedicationText: dedication,
-        },
-      ];
-    });
+  const handleCloseProductDetail = () => {
+    setIsDetailOpen(false);
   };
 
-  const handleUpdateQuantity = (index: number, newQty: number) => {
-    if (newQty <= 0) {
-      handleRemoveItem(index);
+  const scrollToCatalog = () => {
+    const el = document.getElementById('catalogo');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollTo = (id: string) => {
+    if (id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    setCartItems((prev) => {
-      const copy = [...prev];
-      copy[index].quantity = newQty;
-      return copy;
-    });
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
-
-  const handleRemoveItem = (index: number) => {
-    setCartItems((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleClearCart = () => {
-    setCartItems([]);
-  };
-
-  const totalCartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div
       data-palette={currentPalette}
       className="min-h-screen flex flex-col bg-[#fdfbf7] text-[#1c1917] selection:bg-[#f59e0b] selection:text-[#451a03] transition-colors duration-200"
     >
-      {/* Top Architecture Navigation & Status Bar */}
+      {/* Top Sticky Header: Brand, Color Palette Selector & Direct WhatsApp CTA */}
       <TopToolbar
-        activeScreen={activeScreen}
-        onSelectScreen={(screen) => setActiveScreen(screen)}
-        cartCount={totalCartCount}
-        onOpenCart={() => setIsCartOpen(true)}
         currentPalette={currentPalette}
         onChangePalette={setCurrentPalette}
+        onNavigateCatalog={scrollToCatalog}
       />
 
-      {/* Dynamic Screen View Content */}
-      <main className="flex-1">
-        {activeScreen === 'home' && (
-          <HomeScreen
-            onSelectProduct={handleSelectProduct}
-            onNavigateCatalog={() => setActiveScreen('catalogo')}
-            onAddToCart={(prod) => handleAddToCart(prod)}
-          />
-        )}
+      {/* Main Single Landing Page Content Flow */}
+      <main className="flex-1 space-y-12">
+        {/* Hero, Presale Ribbon, Countdown & Why Kajel */}
+        <HomeScreen
+          onSelectProduct={handleOpenProductDetail}
+          onNavigateCatalog={scrollToCatalog}
+        />
 
-        {activeScreen === 'catalogo' && (
+        {/* Complete Catalog & Products Section */}
+        <section id="catalogo" className="scroll-mt-16">
           <CatalogScreen
-            onSelectProduct={handleSelectProduct}
-            onAddToCart={(prod) => handleAddToCart(prod)}
+            onSelectProduct={handleOpenProductDetail}
           />
-        )}
+        </section>
 
-        {activeScreen === 'producto' && (
-          <ProductDetailScreen
-            product={selectedProduct}
-            onAddToCart={handleAddToCart}
-            onBackToCatalog={() => setActiveScreen('catalogo')}
-          />
-        )}
-
-        {activeScreen === 'nosotros' && (
+        {/* Brand Lore, The Carnerita Story & Artisanal Craft */}
+        <section id="historia" className="scroll-mt-16">
           <AboutScreen
-            onNavigateCatalog={() => setActiveScreen('catalogo')}
+            onNavigateCatalog={scrollToCatalog}
           />
-        )}
+        </section>
 
-        {activeScreen === 'contacto' && (
+        {/* Lima District Delivery Calculator & FAQ Accordion */}
+        <section id="envios" className="scroll-mt-16">
           <ContactScreen />
-        )}
+        </section>
       </main>
 
-      {/* Cart Drawer Modal */}
-      <CartModal
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onClearCart={handleClearCart}
+      {/* Product Detail Modal (Opens when inspecting a product) */}
+      <ProductDetailModal
+        product={selectedProduct}
+        isOpen={isDetailOpen}
+        onClose={handleCloseProductDetail}
       />
 
-      {/* Floating Action Buttons: WhatsApp and Quick Cart */}
+      {/* Floating Action Button: Quick WhatsApp Order Consultation */}
       <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 pointer-events-auto">
-        <button
-          onClick={() => setIsCartOpen(true)}
-          className="w-12 h-12 rounded-full bg-[#b45309] hover:bg-[#d97706] text-white shadow-lg flex items-center justify-center transition-transform hover:scale-105 relative cursor-pointer"
-          title="Ver bolsa de compras"
-        >
-          <ShoppingBag className="w-5 h-5" />
-          {totalCartCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#f59e0b] text-[#451a03] text-[11px] font-bold rounded-full flex items-center justify-center shadow-xs">
-              {totalCartCount}
-            </span>
-          )}
-        </button>
-
         <a
           href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('¡Hola Kajel! Deseo consultar por disponibilidad de flores amarillas.')}`}
           target="_blank"
           rel="noreferrer"
-          className="group flex items-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-full shadow-lg transition-transform hover:scale-105"
+          className="group flex items-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1caa4d] text-white rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           title="Chatear por WhatsApp"
         >
           <MessageCircle className="w-6 h-6 fill-white" />
@@ -222,9 +138,8 @@ export default function App() {
         </a>
       </div>
 
-      {/* Global Footer */}
-      <Footer onSelectScreen={(screen) => setActiveScreen(screen)} />
+      {/* Landing Page Footer */}
+      <Footer onScrollTo={handleScrollTo} />
     </div>
   );
 }
-

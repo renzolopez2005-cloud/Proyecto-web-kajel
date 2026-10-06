@@ -22,7 +22,6 @@ import {
 interface HomeScreenProps {
   onSelectProduct: (product: Product) => void;
   onNavigateCatalog: () => void;
-  onAddToCart: (product: Product) => void;
 }
 
 interface CountdownTime {
@@ -65,7 +64,6 @@ const calculateTimeLeft = (target: Date): CountdownTime => {
 export const HomeScreen: React.FC<HomeScreenProps> = ({
   onSelectProduct,
   onNavigateCatalog,
-  onAddToCart,
 }) => {
   // Real-time functional countdown
   const [timeLeft, setTimeLeft] = useState<CountdownTime>(() => 

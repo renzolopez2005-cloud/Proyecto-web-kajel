@@ -18,10 +18,23 @@ import {
 } from 'lucide-react';
 
 interface FooterProps {
-  onSelectScreen: (screen: ActiveScreen) => void;
+  onScrollTo?: (id: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectScreen }) => {
+export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
+  const handleScroll = (id: string) => {
+    if (onScrollTo) {
+      onScrollTo(id);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else if (id === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <footer className="bg-white border-t border-[#e7e2d7]/40 text-[#57534e] pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8">
@@ -73,47 +86,47 @@ export const Footer: React.FC<FooterProps> = ({ onSelectScreen }) => {
           {/* Navigation Links */}
           <div className="space-y-2">
             <h4 className="font-headline text-xs font-bold uppercase tracking-wider text-[#1c1917]">
-              Navegación de Tienda
+              Secciones
             </h4>
             <ul className="space-y-1.5 text-xs">
               <li>
                 <button
-                  onClick={() => onSelectScreen('home')}
-                  className="hover:text-[#b45309] transition-colors text-left"
+                  onClick={() => handleScroll('top')}
+                  className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
-                  Inicio (Landing)
+                  Inicio
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => onSelectScreen('catalogo')}
-                  className="hover:text-[#b45309] transition-colors text-left"
+                  onClick={() => handleScroll('catalogo')}
+                  className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
                   Catálogo Flores Amarillas
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => onSelectScreen('producto')}
-                  className="hover:text-[#b45309] transition-colors text-left"
+                  onClick={() => handleScroll('historia')}
+                  className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
-                  Detalles de Producto
+                  Nuestra Historia & El Significado
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => onSelectScreen('nosotros')}
-                  className="hover:text-[#b45309] transition-colors text-left"
-                >
-                  Sobre Nosotros & Técnica
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onSelectScreen('contacto')}
-                  className="hover:text-[#b45309] transition-colors text-left"
+                  onClick={() => handleScroll('envios')}
+                  className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
                   Pedidos & Envíos Lima
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleScroll('faq')}
+                  className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
+                >
+                  Preguntas Frecuentes
                 </button>
               </li>
             </ul>

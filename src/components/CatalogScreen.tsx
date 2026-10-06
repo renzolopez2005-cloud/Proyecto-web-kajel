@@ -5,7 +5,6 @@ import { createProductWhatsAppLink } from '../utils/whatsapp';
 import { 
   Search, 
   Sparkles, 
-  ShoppingBag, 
   MessageCircle, 
   Star, 
   Check, 
@@ -16,12 +15,10 @@ import {
 
 interface CatalogScreenProps {
   onSelectProduct: (product: Product) => void;
-  onAddToCart: (product: Product) => void;
 }
 
 export const CatalogScreen: React.FC<CatalogScreenProps> = ({
   onSelectProduct,
-  onAddToCart,
 }) => {
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -261,33 +258,25 @@ export const CatalogScreen: React.FC<CatalogScreenProps> = ({
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => onAddToCart(product)}
-                      className="py-2.5 bg-[#fef3c7] hover:bg-[#fef3c7] text-[#1c1917] text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-[#e7e2d7]/40"
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      <span>+ Bolsa</span>
-                    </button>
-
+                  <div className="space-y-2">
                     <button
                       onClick={() => onSelectProduct(product)}
-                      className="py-2.5 bg-[#b45309] hover:bg-[#d97706] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer text-center"
+                      className="w-full py-2.5 bg-[#fffbeb] hover:bg-[#fef3c7] text-[#b45309] border border-[#e7e2d7] text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-2xs cursor-pointer text-center"
                     >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Detalles</span>
+                      <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
+                      <span>Ver Detalles & Personalizar</span>
                     </button>
-                  </div>
 
-                  <a
-                    href={whatsAppLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-2 w-full py-1.5 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#128C7E] rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 text-[#128C7E]" />
-                    <span>Pedir directo al WhatsApp</span>
-                  </a>
+                    <a
+                      href={whatsAppLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 fill-white" />
+                      <span>Pedir por WhatsApp</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             );
