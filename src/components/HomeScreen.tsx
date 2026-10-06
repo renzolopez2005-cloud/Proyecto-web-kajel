@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { Product } from '../types';
 import { 
   PRODUCTS, 
   WHATSAPP_PHONE, 
   WHATSAPP_DISPLAY, 
-  INSTAGRAM_HANDLE, 
   LIMA_DISTRICTS, 
   FAQ_ITEMS 
 } from '../data/products';
@@ -14,23 +13,15 @@ import {
   MessageCircle, 
   Star, 
   ShieldCheck, 
-  Calendar, 
   Sparkles,
   Sun,
-  Gift,
-  Award,
-  BookOpen,
-  Stars,
   CheckCircle2,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
   MapPin,
-  CreditCard,
-  PhoneCall,
-  Camera,
-  PlayCircle,
-  ThumbsUp,
-  Check
+  CreditCard
 } from 'lucide-react';
 import { 
   ChenilleSunflowerIcon, 
@@ -46,55 +37,23 @@ interface HomeScreenProps {
   onAddToCart?: (product: Product) => void;
 }
 
-interface CountdownTime {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  isExpired: boolean;
-}
-
-const getCampaignDeadline = (): Date => {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  // 21 de Septiembre (fecha de la campaña ya concluida)
-  return new Date(currentYear, 8, 21, 23, 59, 59);
-};
-
-const calculateTimeLeft = (target: Date): CountdownTime => {
-  const diff = target.getTime() - new Date().getTime();
-  if (diff <= 0) {
-    return { days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: true };
-  }
-  return {
-    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((diff / 1000 / 60) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-    isExpired: false,
-  };
-};
-
 export const HomeScreen: React.FC<HomeScreenProps> = ({
   onSelectProduct,
   onNavigateAbout,
 }) => {
-  // Real-time functional countdown (at zero since campaign passed)
-  const [timeLeft, setTimeLeft] = useState<CountdownTime>(() => 
-    calculateTimeLeft(getCampaignDeadline())
-  );
-
-  useEffect(() => {
-    const target = getCampaignDeadline();
-    const interval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(target));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   // Catalog filtering state
   const [filterCategory, setFilterCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery] = useState<string>('');
+
+  // Pasarela horizontal scroll ref & handler
+  const pasarelaRef = useRef<HTMLDivElement>(null);
+
+  const scrollPasarela = (direction: 'left' | 'right') => {
+    if (pasarelaRef.current) {
+      const scrollAmount = direction === 'left' ? -350 : 350;
+      pasarelaRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   // District calculator state
   const [selectedDistrict, setSelectedDistrict] = useState<string>(LIMA_DISTRICTS[0].name);
@@ -236,330 +195,65 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               </div>
             </div>
 
-            {/* HERO PHOTOS MOSAIC */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-3">
-              <div className="space-y-3">
-                <div 
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Ver detalles de ${heroProd1.name}`}
-                  onClick={() => onSelectProduct(heroProd1)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      onSelectProduct(heroProd1);
-                    }
-                  }}
-                  className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-[#e7e2d7]/60 transition-transform duration-200 hover:-translate-y-0.5"
-                >
-                  <img
-                    alt={heroProd1.name}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    src={heroProd1.image}
-                    loading="eager"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-xs p-1.5 rounded-xl text-center shadow-xs border border-amber-100">
-                    <span className="text-[11px] font-bold text-[#b45309] block truncate">{heroProd1.name}</span>
-                    <span className="text-xs font-bold text-[#1c1917]">S/ {heroProd1.price.toFixed(2)}</span>
-                  </div>
-                </div>
-
-                <div 
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Ver detalles de ${heroProd2.name}`}
-                  onClick={() => onSelectProduct(heroProd2)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      onSelectProduct(heroProd2);
-                    }
-                  }}
-                  className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-[#e7e2d7]/60 transition-transform duration-200 hover:-translate-y-0.5"
-                >
-                  <img
-                    alt={heroProd2.name}
-                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                    src={heroProd2.image}
-                    loading="eager"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-xs p-1.5 rounded-xl text-center shadow-xs border border-amber-100">
-                    <span className="text-[11px] font-bold text-[#b45309] block truncate">{heroProd2.name}</span>
-                    <span className="text-xs font-bold text-[#1c1917]">S/ {heroProd2.price.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-3 pt-6">
-                <div 
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Ver catálogo de flores"
-                  onClick={scrollToCatalog}
-                  className="rounded-2xl p-4 bg-[#fffbeb] border border-amber-200/80 text-center space-y-2 cursor-pointer hover:bg-[#fef3c7] transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#f59e0b] text-[#78350f] flex items-center justify-center mx-auto shadow-2xs">
-                    <Sun className="w-5 h-5 fill-[#78350f]" />
-                  </div>
-                  <span className="font-headline text-xs font-bold text-[#1c1917] block">
-                    Flores que duran para siempre
-                  </span>
-                  <span className="text-[11px] text-[#b45309] font-semibold block">
-                    Explorar colección ↓
-                  </span>
-                </div>
-
-                <div className="relative rounded-2xl overflow-hidden shadow-md border border-[#e7e2d7]/60 bg-white p-3 text-center space-y-1">
-                  <span className="text-xl font-bold text-[#b45309] block">+1,200</span>
-                  <span className="text-[11px] text-[#57534e] block leading-tight font-medium">
-                    Ramos entregados con amor en Lima
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. CAMPAIGN STATUS BANNER (Maintained as requested) */}
-      <section aria-label="Estado de la campaña" className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="bg-gradient-to-r from-[#fffbeb] via-[#fffdfa] to-[#fef3c7]/40 border border-[#e7e2d7]/70 rounded-2xl p-5 md:p-6 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xs">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#78716c] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
-              <Calendar className="w-6 h-6 text-[#f5f5f4]" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#78716c]">
-                  Campaña Oficial 21 de Septiembre
-                </span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700 border border-rose-200">
-                  Finalizada • No disponible
-                </span>
-              </div>
-              <h2 className="font-headline text-base md:text-lg font-bold text-[#1c1917]">
-                Campaña culminada — Cupos de preventa concluidos
-              </h2>
-              <p className="text-xs md:text-sm text-[#57534e]">
-                La fecha del 21 de septiembre ya culminó y la preventa especial ya no está disponible. Puedes explorar nuestro catálogo regular para pedidos y personalizaciones con entrega en Lima.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 flex-shrink-0">
-            {/* Live Countdown Clock in Zero */}
-            <div className="flex items-center gap-1.5 bg-white/90 px-3 py-2 rounded-xl border border-[#e7e2d7]/60 shadow-2xs">
-              <div className="text-center min-w-[34px]">
-                <span className="font-headline text-base md:text-lg font-bold text-[#78716c] block leading-none">
-                  00
-                </span>
-                <span className="text-[9px] text-[#78716c] uppercase font-bold">Días</span>
-              </div>
-              <span className="text-[#a8a29e] font-bold text-xs">:</span>
-              <div className="text-center min-w-[34px]">
-                <span className="font-headline text-base md:text-lg font-bold text-[#78716c] block leading-none">
-                  00
-                </span>
-                <span className="text-[9px] text-[#78716c] uppercase font-bold">Horas</span>
-              </div>
-              <span className="text-[#a8a29e] font-bold text-xs">:</span>
-              <div className="text-center min-w-[34px]">
-                <span className="font-headline text-base md:text-lg font-bold text-[#78716c] block leading-none">
-                  00
-                </span>
-                <span className="text-[9px] text-[#78716c] uppercase font-bold">Min</span>
-              </div>
-              <span className="text-[#a8a29e] font-bold text-xs">:</span>
-              <div className="text-center min-w-[34px]">
-                <span className="font-headline text-base md:text-lg font-bold text-[#78716c] block leading-none">
-                  00
-                </span>
-                <span className="text-[9px] text-[#78716c] uppercase font-bold">Seg</span>
-              </div>
-            </div>
-
-            {/* Campaign Availability Status Metric */}
-            <div className="bg-white/90 px-3 py-2 rounded-xl text-center border border-rose-200 shadow-2xs min-w-[90px]">
-              <span className="font-headline text-xs md:text-sm font-bold text-rose-600 block leading-tight">
-                No disponible
-              </span>
-              <span className="block text-[10px] text-[#57534e] font-medium mt-0.5">Preventa cerrada</span>
-            </div>
-
-            {/* Booking Action Button */}
-            <button
-              type="button"
-              onClick={scrollToCatalog}
-              className="px-5 py-2.5 bg-[#b45309] hover:bg-[#d97706] active:bg-[#78350f] text-white rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
-            >
-              Ver Catálogo Disponible
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. PRODUCT CATALOG SECTION (Integrated into the single page flow) */}
-      <section id="catalogo" aria-label="Catálogo de Ramos y Boxes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
-        {/* Header of the catalog */}
-        <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>Colección de Flores Amarillas Hechas a Mano</span>
-          </div>
-          <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
-            Elige tu Ramo de Flores Eternas
-          </h2>
-          <p className="text-xs md:text-sm text-[#57534e]">
-            Confeccionados en chenille aterciopelado de alta densidad. Cada ramo incluye luces hada, tarjeta de dedicatoria y empaque protector para entrega en Lima.
-          </p>
-        </div>
-
-        {/* Filter Chips */}
-        <div className="flex items-center justify-center gap-2 flex-wrap">
-          <button
-            type="button"
-            onClick={() => setFilterCategory('all')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              filterCategory === 'all'
-                ? 'bg-[#b45309] text-white shadow-xs'
-                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
-            }`}
-          >
-            Todos los Ramos ({PRODUCTS.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setFilterCategory('boxes')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              filterCategory === 'boxes'
-                ? 'bg-[#b45309] text-white shadow-xs'
-                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
-            }`}
-          >
-            🎁 Gift Boxes con Peluche
-          </button>
-          <button
-            type="button"
-            onClick={() => setFilterCategory('jewelry')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              filterCategory === 'jewelry'
-                ? 'bg-[#b45309] text-white shadow-xs'
-                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
-            }`}
-          >
-            ✨ Con Anillo Giratorio
-          </button>
-          <button
-            type="button"
-            onClick={() => setFilterCategory('ramos')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              filterCategory === 'ramos'
-                ? 'bg-[#b45309] text-white shadow-xs'
-                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
-            }`}
-          >
-            🌻 Ramos Florales
-          </button>
-        </div>
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-          {filteredProducts.map((product) => {
-            const whatsAppLink = createProductWhatsAppLink(product);
-            return (
+            {/* HERO PHOTOS SHOWCASE */}
+            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
               <div 
-                key={product.id}
-                className="rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
+                role="button"
+                tabIndex={0}
+                aria-label={`Ver detalles de ${heroProd1.name}`}
+                onClick={() => onSelectProduct(heroProd1)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelectProduct(heroProd1);
+                  }
+                }}
+                className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-[#e7e2d7]/60 transition-transform duration-200 hover:-translate-y-1 h-72 sm:h-80 bg-white flex flex-col justify-end"
               >
-                <div>
-                  {/* Photo Container */}
-                  <div 
-                    onClick={() => onSelectProduct(product)}
-                    className="relative aspect-4/3 overflow-hidden bg-[#fffbeb] cursor-pointer"
-                  >
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#fef08a] text-[#451a03] shadow-xs">
-                        {product.tag}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-5 space-y-3">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <h3 
-                        onClick={() => onSelectProduct(product)}
-                        className="font-headline text-lg font-bold text-[#1c1917] group-hover:text-[#b45309] transition-colors cursor-pointer"
-                      >
-                        {product.name}
-                      </h3>
-                      <div className="text-right">
-                        <span className="text-xs text-[#78716c] line-through block">
-                          S/ {product.normalPrice.toFixed(2)}
-                        </span>
-                        <span className="font-headline text-lg font-bold text-[#b45309]">
-                          S/ {product.price.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-[#57534e] line-clamp-2 leading-relaxed">
-                      {product.description}
-                    </p>
-
-                    {/* Inclusions pill list */}
-                    <div className="bg-[#fffbeb] p-3 rounded-xl space-y-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#b45309] block">
-                        Incluye en el paquete:
-                      </span>
-                      <ul className="space-y-0.5 text-[11px] text-[#57534e]">
-                        {product.inclusions.slice(0, 3).map((inc, i) => (
-                          <li key={i} className="flex items-center gap-1.5">
-                            <span className="w-1 h-1 rounded-full bg-[#f59e0b] shrink-0" />
-                            <span className="truncate">{inc}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Single Unified High-Converting CTA Button */}
-                <div className="p-5 pt-0 space-y-2">
-                  <a
-                    href={whatsAppLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full py-3 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da850] text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs hover:shadow-md transition-all active:scale-[0.98]"
-                  >
-                    <MessageCircle className="w-4 h-4 fill-white" />
-                    <span>Pedir por WhatsApp (S/ {product.price.toFixed(2)})</span>
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={() => onSelectProduct(product)}
-                    className="w-full py-2 bg-[#fffbeb] hover:bg-[#fef3c7] text-[#b45309] rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors border border-[#e7e2d7]/60 cursor-pointer"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-                    <span>Ver fotos y dedicatoria</span>
-                  </button>
+                <img
+                  alt={heroProd1.name}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  src={heroProd1.image}
+                  loading="eager"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="relative z-10 m-2.5 bg-white/95 backdrop-blur-xs p-2.5 rounded-xl text-center shadow-xs border border-amber-100">
+                  <span className="text-[11px] font-bold text-[#b45309] block truncate">{heroProd1.name}</span>
+                  <span className="text-xs font-bold text-[#1c1917]">S/ {heroProd1.price.toFixed(2)}</span>
                 </div>
               </div>
-            );
-          })}
+
+              <div 
+                role="button"
+                tabIndex={0}
+                aria-label={`Ver detalles de ${heroProd2.name}`}
+                onClick={() => onSelectProduct(heroProd2)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelectProduct(heroProd2);
+                  }
+                }}
+                className="relative rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-[#e7e2d7]/60 transition-transform duration-200 hover:-translate-y-1 h-72 sm:h-80 bg-white flex flex-col justify-end"
+              >
+                <img
+                  alt={heroProd2.name}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  src={heroProd2.image}
+                  loading="eager"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="relative z-10 m-2.5 bg-white/95 backdrop-blur-xs p-2.5 rounded-xl text-center shadow-xs border border-amber-100">
+                  <span className="text-[11px] font-bold text-[#b45309] block truncate">{heroProd2.name}</span>
+                  <span className="text-xs font-bold text-[#1c1917]">S/ {heroProd2.price.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 5. CRAFTSMANSHIP & BENEFIT COMPARISON SECTION */}
+      {/* 3. CRAFTSMANSHIP & BENEFIT COMPARISON SECTION (Placed where the campaign was) */}
       <section id="beneficios" aria-label="Por qué elegir flores artesanales Kajel" className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="rounded-3xl bg-white border border-[#e7e2d7]/60 p-6 md:p-10 shadow-xs relative overflow-hidden space-y-8">
           <div className="max-w-2xl mx-auto text-center space-y-3">
@@ -608,7 +302,198 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </section>
 
-      {/* 6. LIMA DELIVERY COVERAGE & SECURE PAYMENT METHODS */}
+      {/* 4. PRODUCT CATALOG IN PASARELA (Horizontal runway avoiding excess vertical spacing) */}
+      <section id="catalogo" aria-label="Pasarela de Ramos y Boxes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-5">
+        {/* Header of the catalog pasarela */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-2 max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
+              <span>Colección de Flores Amarillas Hechas a Mano</span>
+            </div>
+            <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
+              Pasarela de Ramos y Gift Boxes
+            </h2>
+            <p className="text-xs md:text-sm text-[#57534e]">
+              Confeccionados en chenille aterciopelado con luces de hada y dedicatoria. Desliza para explorar todos los modelos sin desplazarte de más.
+            </p>
+          </div>
+
+          {/* Pasarela Navigation Arrow Controls */}
+          <div className="flex items-center gap-2 shrink-0 self-end md:self-auto">
+            <span className="text-xs text-[#78716c] font-medium hidden sm:inline mr-2">
+              {filteredProducts.length} modelos
+            </span>
+            <button
+              type="button"
+              onClick={() => scrollPasarela('left')}
+              className="w-10 h-10 rounded-full bg-white hover:bg-[#fffbeb] active:bg-amber-100 border border-[#e7e2d7] text-[#57534e] hover:text-[#b45309] flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+              aria-label="Ver productos anteriores"
+              title="Anterior"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollPasarela('right')}
+              className="w-10 h-10 rounded-full bg-[#b45309] hover:bg-[#d97706] active:bg-[#78350f] text-white flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+              aria-label="Ver siguientes productos"
+              title="Siguiente"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Filter Chips */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+          <button
+            type="button"
+            onClick={() => setFilterCategory('all')}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+              filterCategory === 'all'
+                ? 'bg-[#b45309] text-white shadow-xs'
+                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
+            }`}
+          >
+            Todos ({PRODUCTS.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilterCategory('boxes')}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+              filterCategory === 'boxes'
+                ? 'bg-[#b45309] text-white shadow-xs'
+                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
+            }`}
+          >
+            🎁 Gift Boxes con Peluche
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilterCategory('jewelry')}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+              filterCategory === 'jewelry'
+                ? 'bg-[#b45309] text-white shadow-xs'
+                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
+            }`}
+          >
+            ✨ Con Anillo Giratorio
+          </button>
+          <button
+            type="button"
+            onClick={() => setFilterCategory('ramos')}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+              filterCategory === 'ramos'
+                ? 'bg-[#b45309] text-white shadow-xs'
+                : 'bg-white text-[#57534e] hover:bg-[#fef3c7] border border-[#e7e2d7]'
+            }`}
+          >
+            🌻 Ramos Florales
+          </button>
+        </div>
+
+        {/* Pasarela Horizontal Scroll Track */}
+        <div 
+          ref={pasarelaRef}
+          className="flex items-stretch gap-5 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth"
+          style={{ scrollbarWidth: 'thin' }}
+        >
+          {filteredProducts.map((product) => {
+            const whatsAppLink = createProductWhatsAppLink(product);
+            return (
+              <div 
+                key={product.id}
+                className="w-[280px] sm:w-[320px] md:w-[335px] shrink-0 snap-start rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
+              >
+                <div>
+                  {/* Photo Container */}
+                  <div 
+                    onClick={() => onSelectProduct(product)}
+                    className="relative aspect-4/3 overflow-hidden bg-[#fffbeb] cursor-pointer"
+                  >
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#fef08a] text-[#451a03] shadow-xs">
+                        {product.tag}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Body Content */}
+                  <div className="p-4 space-y-2.5">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <h3 
+                        onClick={() => onSelectProduct(product)}
+                        className="font-headline text-base font-bold text-[#1c1917] group-hover:text-[#b45309] transition-colors cursor-pointer truncate"
+                        title={product.name}
+                      >
+                        {product.name}
+                      </h3>
+                      <div className="text-right shrink-0">
+                        <span className="text-[11px] text-[#78716c] line-through block leading-none">
+                          S/ {product.normalPrice.toFixed(2)}
+                        </span>
+                        <span className="font-headline text-base font-bold text-[#b45309]">
+                          S/ {product.price.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-[#57534e] line-clamp-2 leading-relaxed">
+                      {product.description}
+                    </p>
+
+                    {/* Inclusions pill list */}
+                    <div className="bg-[#fffbeb] p-2.5 rounded-xl space-y-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#b45309] block">
+                        Incluye en el paquete:
+                      </span>
+                      <ul className="space-y-0.5 text-[11px] text-[#57534e]">
+                        {product.inclusions.slice(0, 3).map((inc, i) => (
+                          <li key={i} className="flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-[#f59e0b] shrink-0" />
+                            <span className="truncate">{inc}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Single Unified High-Converting CTA Button */}
+                <div className="p-4 pt-0 space-y-2">
+                  <a
+                    href={whatsAppLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full py-2.5 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da850] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs hover:shadow-md transition-all active:scale-[0.98]"
+                  >
+                    <MessageCircle className="w-4 h-4 fill-white" />
+                    <span>Pedir por WhatsApp (S/ {product.price.toFixed(2)})</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => onSelectProduct(product)}
+                    className="w-full py-2 bg-[#fffbeb] hover:bg-[#fef3c7] text-[#b45309] rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors border border-[#e7e2d7]/60 cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
+                    <span>Ver fotos y dedicatoria</span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 5. LIMA DELIVERY COVERAGE & SECURE PAYMENT METHODS */}
       <section id="envios-lima" className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">

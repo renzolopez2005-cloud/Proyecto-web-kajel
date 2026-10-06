@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Product } from './types';
+import React, { useState, useEffect } from 'react';
+import { Product, ColorPalette } from './types';
 import { WHATSAPP_PHONE } from './data/products';
 import { TopToolbar } from './components/TopToolbar';
 import { HomeScreen } from './components/HomeScreen';
@@ -12,16 +12,49 @@ export default function App() {
   const [currentView, setCurrentView] = useState<'landing' | 'about'>('landing');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const handleScrollToCatalog = () => {
+  // Color palette state persisted in localStorage
+  const [currentPalette, setCurrentPalette] = useState<ColorPalette>(() => {
+    try {
+      const saved = localStorage.getItem('kajel_palette');
+      const validPalettes: ColorPalette[] = ['girasol', 'botanico', 'romance', 'lavanda', 'atardecer', 'oceano', 'terracota', 'noche'];
+      if (saved && validPalettes.includes(saved as ColorPalette)) {
+        return saved as ColorPalette;
+      }
+    } catch {
+      // ignore
+    }
+    return 'girasol';
+  });
+
+  // Sync currentPalette with localStorage and root DOM element
+  useEffect(() => {
+    try {
+      localStorage.setItem('kajel_palette', currentPalette);
+    } catch {
+      // ignore
+    }
+    document.documentElement.setAttribute('data-palette', currentPalette);
+    document.body.setAttribute('data-palette', currentPalette);
+  }, [currentPalette]);
+
+  const handleNavigateSection = (sectionId: string) => {
     if (currentView !== 'landing') {
       setCurrentView('landing');
       setTimeout(() => {
-        const el = document.getElementById('catalogo');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (sectionId === 'top') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const el = document.getElementById(sectionId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
       }, 100);
     } else {
-      const el = document.getElementById('catalogo');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (sectionId === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -37,7 +70,7 @@ export default function App() {
 
   return (
     <div
-      data-palette="girasol"
+      data-palette={currentPalette}
       className="min-h-screen flex flex-col bg-gradient-to-b from-[#fef7e6] via-[#fffdf5] to-[#fef2d3] text-[#1c1917] selection:bg-[#f59e0b] selection:text-[#451a03] relative overflow-x-hidden"
     >
       {/* Warm Ambient Glow Atmosphere in Background */}
@@ -45,8 +78,13 @@ export default function App() {
       <div className="fixed top-[35%] right-[-120px] w-[600px] h-[600px] bg-[#f59e0b]/15 rounded-full blur-[150px] pointer-events-none -z-10" />
       <div className="fixed bottom-[10%] left-[-100px] w-[500px] h-[500px] bg-[#fef08a]/35 rounded-full blur-[130px] pointer-events-none -z-10" />
 
-      {/* 1. DISTRACTION-FREE LANDING HEADER */}
-      <TopToolbar onScrollToCatalog={handleScrollToCatalog} />
+      {/* 1. COMPLETE HEADER WITH NAVIGATION, PALETTE SELECTOR & CTA */}
+      <TopToolbar 
+        currentPalette={currentPalette}
+        onChangePalette={setCurrentPalette}
+        onNavigateSection={handleNavigateSection}
+        onNavigateAbout={handleNavigateAbout}
+      />
 
       {/* 2. MAIN VIEW: UNIFIED LANDING PAGE OR DEDICATED ABOUT PAGE */}
       <main className="flex-1">
