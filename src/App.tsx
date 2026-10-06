@@ -3,18 +3,36 @@ import { Product } from './types';
 import { WHATSAPP_PHONE } from './data/products';
 import { TopToolbar } from './components/TopToolbar';
 import { HomeScreen } from './components/HomeScreen';
+import { AboutScreen } from './components/AboutScreen';
 import { ProductDetailScreen } from './components/ProductDetailScreen';
 import { Footer } from './components/Footer';
 import { MessageCircle } from 'lucide-react';
 
 export default function App() {
+  const [currentView, setCurrentView] = useState<'landing' | 'about'>('landing');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const handleScrollToCatalog = () => {
-    const el = document.getElementById('catalogo');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    if (currentView !== 'landing') {
+      setCurrentView('landing');
+      setTimeout(() => {
+        const el = document.getElementById('catalogo');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.getElementById('catalogo');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleNavigateAbout = () => {
+    setCurrentView('about');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackToLanding = () => {
+    setCurrentView('landing');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -22,12 +40,19 @@ export default function App() {
       data-palette="girasol"
       className="min-h-screen flex flex-col bg-[#fdfbf7] text-[#1c1917] selection:bg-[#f59e0b] selection:text-[#451a03]"
     >
-      {/* 1. DISTRACTION-FREE LANDING HEADER (No nav links, no palette dropdown) */}
+      {/* 1. DISTRACTION-FREE LANDING HEADER */}
       <TopToolbar onScrollToCatalog={handleScrollToCatalog} />
 
-      {/* 2. SINGLE VERTICAL SCROLL LANDING CONTENT */}
+      {/* 2. MAIN VIEW: UNIFIED LANDING PAGE OR DEDICATED ABOUT PAGE */}
       <main className="flex-1">
-        <HomeScreen onSelectProduct={(prod) => setSelectedProduct(prod)} />
+        {currentView === 'landing' ? (
+          <HomeScreen 
+            onSelectProduct={(prod) => setSelectedProduct(prod)}
+            onNavigateAbout={handleNavigateAbout}
+          />
+        ) : (
+          <AboutScreen onNavigateCatalog={handleBackToLanding} />
+        )}
       </main>
 
       {/* 3. PRODUCT DETAILS MODAL (Opens in place, keeping the visitor on the landing page) */}
@@ -65,7 +90,7 @@ export default function App() {
       </div>
 
       {/* 5. MINIMALIST FOOTER */}
-      <Footer />
+      <Footer onNavigateAbout={handleNavigateAbout} />
     </div>
   );
 }

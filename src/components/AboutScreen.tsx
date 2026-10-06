@@ -12,6 +12,7 @@ import {
   Palette, 
   HelpCircle,
   ArrowRight,
+  ArrowLeft,
   MessageCircle,
   BookOpen,
   Award,
@@ -25,7 +26,29 @@ interface AboutScreenProps {
 
 export const AboutScreen: React.FC<AboutScreenProps> = ({ onNavigateCatalog }) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-14">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-10">
+      {/* Top Back Navigation Bar */}
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          onClick={onNavigateCatalog}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-[#fef3c7] text-[#b45309] font-bold text-xs border border-[#e7e2d7] shadow-2xs transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>← Volver al Catálogo de Ramos</span>
+        </button>
+
+        <a
+          href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola Kajel! Deseo consultar detalles para mi pedido de flores amarillas.')}`}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold rounded-xl shadow-2xs transition-all"
+        >
+          <MessageCircle className="w-3.5 h-3.5 fill-white" />
+          <span>Pedir por WhatsApp</span>
+        </a>
+      </div>
+
       {/* Hero Header */}
       <div className="rounded-3xl bg-gradient-to-br from-[#fffbeb] via-white to-[#fef9c3]/50 p-8 md:p-14 border border-[#e7e2d7]/60 shadow-xs text-center space-y-5">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold shadow-2xs">

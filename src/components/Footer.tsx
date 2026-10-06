@@ -19,9 +19,10 @@ import {
 
 interface FooterProps {
   onSelectScreen?: (screen: ActiveScreen) => void;
+  onNavigateAbout?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = () => {
+export const Footer: React.FC<FooterProps> = ({ onNavigateAbout }) => {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -93,10 +94,16 @@ export const Footer: React.FC<FooterProps> = () => {
               </li>
               <li>
                 <button
-                  onClick={() => scrollTo('taller-artesanal')}
+                  onClick={() => {
+                    if (onNavigateAbout) {
+                      onNavigateAbout();
+                    } else {
+                      scrollTo('taller-artesanal');
+                    }
+                  }}
                   className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
-                  Taller & Confección en Chenille
+                  Taller & Historia de la Marca
                 </button>
               </li>
               <li>

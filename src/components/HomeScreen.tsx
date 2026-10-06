@@ -41,6 +41,7 @@ import {
 
 interface HomeScreenProps {
   onSelectProduct: (product: Product) => void;
+  onNavigateAbout?: () => void;
   onNavigateCatalog?: () => void;
   onAddToCart?: (product: Product) => void;
 }
@@ -76,6 +77,7 @@ const calculateTimeLeft = (target: Date): CountdownTime => {
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({
   onSelectProduct,
+  onNavigateAbout,
 }) => {
   // Real-time functional countdown (at zero since campaign passed)
   const [timeLeft, setTimeLeft] = useState<CountdownTime>(() => 
@@ -606,60 +608,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </section>
 
-      {/* 6. TALLER ARTESANAL & BRAND STORY */}
-      <section id="taller-artesanal" className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="rounded-3xl bg-gradient-to-br from-[#fffbeb] via-[#fef9c3]/30 to-white border border-[#e7e2d7]/70 p-6 sm:p-8 md:p-12 shadow-xs space-y-8">
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100/80 text-[#b45309] text-xs font-bold">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Confección Artesanal en Lima</span>
-            </div>
-            <h2 className="font-headline text-2xl sm:text-3xl md:text-4xl font-bold text-[#1c1917] leading-tight">
-              De una mesa de centro en Lima a cientos de recuerdos eternos
-            </h2>
-            <p className="text-sm text-[#57534e] leading-relaxed">
-              Detrás de cada ramo no hay una fábrica industrial ni plástico importado. Cada pieza es moldeada a mano con horas de dedicación.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 */}
-            <div className="p-6 rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-2xs space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-[#fffbeb] text-[#b45309] border border-amber-200/70 flex items-center justify-center font-bold">
-                <Sun className="w-5 h-5" />
-              </div>
-              <h3 className="font-headline text-lg font-bold text-[#1c1917]">¿Qué significa «Kajel»?</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Fusión entre <strong>«K’aj»</strong> (palabra que evoca el resplandor dorado del sol) y <strong>«El»</strong> (por <em>Eternos Lazos</em>). Un pequeño sol en las manos que jamás se apaga.
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="p-6 rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-2xs space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-[#fffbeb] text-[#b45309] border border-amber-200/70 flex items-center justify-center font-bold">
-                <Stars className="w-5 h-5" />
-              </div>
-              <h3 className="font-headline text-lg font-bold text-[#1c1917]">La Carnerita & Peluches</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Confeccionamos peluches exclusivos con velo de novia y mini girasoles de chenille, ideales para aniversarios y propuestas románticas.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="p-6 rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-2xs space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-[#fffbeb] text-[#b45309] border border-amber-200/70 flex items-center justify-center font-bold">
-                <Award className="w-5 h-5" />
-              </div>
-              <h3 className="font-headline text-lg font-bold text-[#1c1917]">El Manifiesto de Taller</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                <strong>Ninguna flor sale de una máquina</strong>. Cada pétalo se moldea a mano, se revisa y se empaca con cinta de satén y luces de hada.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. LIMA DELIVERY COVERAGE & SECURE PAYMENT METHODS */}
+      {/* 6. LIMA DELIVERY COVERAGE & SECURE PAYMENT METHODS */}
       <section id="envios-lima" className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
@@ -854,6 +803,39 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           })}
         </div>
       </section>
+
+      {/* 9. DISCREET CRAFT STORY CARD & BUTTON (Goes to dedicated About page) */}
+      {onNavigateAbout && (
+        <section className="max-w-4xl mx-auto px-4 md:px-8">
+          <div className="rounded-3xl bg-[#fffbeb] border border-amber-200/80 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xs">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#f59e0b] text-[#78350f] flex items-center justify-center shrink-0 shadow-2xs font-bold">
+                <Sun className="w-6 h-6 fill-[#78350f]" />
+              </div>
+              <div className="space-y-1">
+                <span className="text-[11px] font-bold text-[#b45309] uppercase tracking-wider block">
+                  Taller de Autor • Lima, Perú
+                </span>
+                <h3 className="font-headline text-base sm:text-lg font-bold text-[#1c1917]">
+                  ¿Quieres conocer la historia detrás de nuestras flores?
+                </h3>
+                <p className="text-xs text-[#57534e] max-w-lg leading-relaxed">
+                  Descubre el significado de Kajel, la leyenda de la Carnerita y nuestro manifiesto de confección 100% hecho a mano en Lima.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={onNavigateAbout}
+              className="px-5 py-3 rounded-xl bg-white hover:bg-amber-100/70 active:bg-amber-200 text-[#b45309] font-bold text-xs border border-amber-300 shadow-2xs hover:shadow-xs transition-all shrink-0 cursor-pointer flex items-center gap-2 whitespace-nowrap"
+            >
+              <span>Conoce nuestra historia</span>
+              <span className="text-sm">→</span>
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* 10. CLOSING PERSUASIVE WHATSAPP CALLOUT BANNER */}
       <section className="max-w-7xl mx-auto px-4 md:px-8">
