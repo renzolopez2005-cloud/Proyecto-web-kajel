@@ -241,68 +241,68 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </section>
 
-      {/* 3. CRAFTSMANSHIP & BENEFIT COMPARISON SECTION (Placed where the campaign was) */}
-      <section id="beneficios" aria-label="Por qué elegir flores artesanales Kajel" className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="rounded-3xl bg-white border border-[#e7e2d7]/60 p-6 md:p-10 shadow-xs relative overflow-hidden space-y-8">
-          <div className="max-w-2xl mx-auto text-center space-y-3">
-            <span className="text-xs uppercase font-bold text-[#b45309] tracking-wider block">
-              Flores Eternas Hechas a Mano
-            </span>
-            <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
-              El cariño de un detalle que no muere en el florero
-            </h2>
-            <p className="text-xs md:text-sm text-[#57534e] leading-relaxed">
-              A diferencia de las flores frescas que duran solo unos días, nuestros girasoles en chenille conservan su textura aterciopelada, color vivo y valor sentimental por siempre.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-[#fffbeb]/60 border border-[#e7e2d7]/60 space-y-3 hover:shadow-xs transition-shadow">
-              <div className="w-11 h-11 rounded-xl bg-[#fef3c7] flex items-center justify-center text-[#b45309] border border-amber-200/60 shadow-2xs">
-                <ChenilleSunflowerIcon className="w-6 h-6" />
+      {/* 3. RESUMEN DE BENEFICIOS (Compacto & Directo - Ahorro de espacio) */}
+      <section id="beneficios" aria-label="Beneficios de flores artesanales Kajel" className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="rounded-2xl bg-gradient-to-r from-[#fffbeb] via-white to-[#fef3c7]/50 border border-[#e7e2d7]/80 p-3.5 sm:p-4 shadow-2xs">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3">
+            <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/90 border border-amber-200/60 shadow-2xs">
+              <div className="w-9 h-9 rounded-xl bg-[#fef3c7] flex items-center justify-center text-[#b45309] shrink-0 border border-amber-200/70 shadow-2xs">
+                <ChenilleSunflowerIcon className="w-4.5 h-4.5" />
               </div>
-              <h3 className="font-headline text-base font-bold text-[#1c1917]">Técnica Chenille Aterciopelada</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Moldeamos pétalo por pétalo con limpiapipas chenille de alta densidad, logrando flores mullidas, resistentes y con un tacto delicado único.
-              </p>
+              <div className="min-w-0">
+                <h3 className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] truncate">
+                  100% Chenille Aterciopelado
+                </h3>
+                <p className="text-[11px] text-[#57534e] truncate">
+                  Flores eternas que nunca se marchitan
+                </p>
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#fffbeb]/60 border border-[#e7e2d7]/60 space-y-3 hover:shadow-xs transition-shadow">
-              <div className="w-11 h-11 rounded-xl bg-[#fef3c7] flex items-center justify-center text-[#b45309] border border-amber-200/60 shadow-2xs">
-                <Sparkles className="w-5 h-5 text-[#b45309]" />
+            <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/90 border border-amber-200/60 shadow-2xs">
+              <div className="w-9 h-9 rounded-xl bg-[#fef3c7] flex items-center justify-center text-[#b45309] shrink-0 border border-amber-200/70 shadow-2xs">
+                <Sparkles className="w-4.5 h-4.5 text-[#b45309]" />
               </div>
-              <h3 className="font-headline text-base font-bold text-[#1c1917]">Joyas Giratorias Inoxidables</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Nuestros gift boxes incorporan anillos y dijes en acero quirúrgico dorado con mecanismo giratorio antiestrés, diseñados para acompañarla siempre.
-              </p>
+              <div className="min-w-0">
+                <h3 className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] truncate">
+                  Joyas Giratorias Inoxidables
+                </h3>
+                <p className="text-[11px] text-[#57534e] truncate">
+                  Acero quirúrgico dorado con giro antiestrés
+                </p>
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#fffbeb]/60 border border-[#e7e2d7]/60 space-y-3 hover:shadow-xs transition-shadow">
-              <div className="w-11 h-11 rounded-xl bg-[#fef3c7] flex items-center justify-center text-[#b45309] border border-amber-200/60 shadow-2xs">
-                <ShieldCheck className="w-5 h-5 text-[#b45309]" />
+            <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/90 border border-amber-200/60 shadow-2xs">
+              <div className="w-9 h-9 rounded-xl bg-[#fef3c7] flex items-center justify-center text-[#b45309] shrink-0 border border-amber-200/70 shadow-2xs">
+                <ShieldCheck className="w-4.5 h-4.5 text-[#b45309]" />
               </div>
-              <h3 className="font-headline text-base font-bold text-[#1c1917]">Atención Cálida & Entrega Puntual</h3>
-              <p className="text-xs text-[#57534e] leading-relaxed">
-                Te enviamos foto previa de tu ramo terminado por WhatsApp, caligrafiamos tu dedicatoria en tarjeta fina y coordinamos la ruta de entrega en Lima.
-              </p>
+              <div className="min-w-0">
+                <h3 className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] truncate">
+                  Atención & Entrega en Lima
+                </h3>
+                <p className="text-[11px] text-[#57534e] truncate">
+                  Foto previa por WhatsApp y dedicatoria
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. PRODUCT CATALOG - COMPACT 4-COLUMN VIEW (All visible without scrolling/sliding) */}
-      <section id="catalogo" aria-label="Catálogo de Ramos y Boxes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-5">
+      {/* 4. PRODUCT CATALOG - COMPACT 4-COLUMN VIEW (Only Image, Title, Price & Direct Action) */}
+      <section id="catalogo" aria-label="Catálogo de Ramos y Boxes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-4">
         {/* Header of the catalog */}
-        <div className="text-center sm:text-left space-y-1.5 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
+        <div className="text-center sm:text-left space-y-1 max-w-2xl">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
             <span>Colección Exclusiva de Flores Eternas</span>
           </div>
           <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
             Nuestros 4 Diseños Disponibles
           </h2>
-          <p className="text-xs md:text-sm text-[#57534e]">
-            Elige tu arreglo favorito confeccionado en chenille aterciopelado con luces de hada y dedicatoria.
+          <p className="text-xs text-[#57534e]">
+            Selecciona tu modelo favorito. Fotos ampliadas y dedicatoria detallada disponibles en cada arreglo.
           </p>
         </div>
 
@@ -354,7 +354,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </button>
         </div>
 
-        {/* Compact Grid: All products displayed side-by-side (2 cols on mobile, 4 cols on tablet/desktop) */}
+        {/* Compact Grid: Only Image, Title, Price, and Buttons */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {filteredProducts.map((product) => {
             const whatsAppLink = createProductWhatsAppLink(product);
@@ -364,7 +364,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 className="rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group hover:-translate-y-0.5 duration-200"
               >
                 <div>
-                  {/* Photo Container - Compact height */}
+                  {/* Photo Container */}
                   <div 
                     onClick={() => onSelectProduct(product)}
                     className="relative aspect-square sm:aspect-4/3 max-h-40 sm:max-h-44 overflow-hidden bg-[#fffbeb] cursor-pointer"
@@ -382,43 +382,22 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     </div>
                   </div>
 
-                  {/* Body Content - Compact padding & typography */}
-                  <div className="p-3 sm:p-3.5 space-y-2">
-                    <div>
-                      <h3 
-                        onClick={() => onSelectProduct(product)}
-                        className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] group-hover:text-[#b45309] transition-colors cursor-pointer line-clamp-1"
-                        title={product.name}
-                      >
-                        {product.name}
-                      </h3>
-                      <div className="flex items-baseline gap-1.5 mt-0.5">
-                        <span className="font-headline text-sm sm:text-base font-bold text-[#b45309]">
-                          S/ {product.price.toFixed(2)}
-                        </span>
-                        <span className="text-[10px] text-[#78716c] line-through">
-                          S/ {product.normalPrice.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-[11px] text-[#57534e] line-clamp-2 leading-relaxed">
-                      {product.description}
-                    </p>
-
-                    {/* Inclusions pill list - compact */}
-                    <div className="bg-[#fffbeb] p-2 rounded-xl">
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-[#b45309] block mb-0.5">
-                        Incluye:
+                  {/* Body Content: ONLY Title and Price */}
+                  <div className="p-3 sm:p-3.5 space-y-1.5">
+                    <h3 
+                      onClick={() => onSelectProduct(product)}
+                      className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] group-hover:text-[#b45309] transition-colors cursor-pointer line-clamp-1"
+                      title={product.name}
+                    >
+                      {product.name}
+                    </h3>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="font-headline text-sm sm:text-base font-bold text-[#b45309]">
+                        S/ {product.price.toFixed(2)}
                       </span>
-                      <ul className="space-y-0.5 text-[10px] text-[#57534e]">
-                        {product.inclusions.slice(0, 2).map((inc, i) => (
-                          <li key={i} className="flex items-center gap-1">
-                            <span className="w-1 h-1 rounded-full bg-[#f59e0b] shrink-0" />
-                            <span className="truncate">{inc}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <span className="text-[10px] text-[#78716c] line-through">
+                        S/ {product.normalPrice.toFixed(2)}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -545,60 +524,63 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </section>
 
-      {/* 8. TESTIMONIALS SECTION */}
-      <section id="testimonios" aria-label="Opiniones de clientes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-6">
-        <div className="text-center space-y-2 max-w-xl mx-auto">
+      {/* 8. TESTIMONIALS SECTION (Compact: solo asunto y calificación de estrellas) */}
+      <section id="testimonios" aria-label="Opiniones de clientes" className="max-w-7xl mx-auto px-4 md:px-8 space-y-4">
+        <div className="text-center space-y-1 max-w-xl mx-auto">
           <span className="text-xs uppercase font-bold text-[#b45309] tracking-wider block">
-            Historias & Experiencias Reales
+            Opiniones de Clientes
           </span>
-          <h2 className="font-headline text-2xl font-bold text-[#1c1917]">
-            Lo que dicen quienes ya regalaron Kajel
+          <h2 className="font-headline text-xl sm:text-2xl font-bold text-[#1c1917]">
+            Experiencias con Flores Kajel
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-5 rounded-2xl bg-white border border-[#e7e2d7]/60 shadow-2xs space-y-3">
-            <div className="flex text-[#f59e0b] gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#f59e0b] text-[#f59e0b]" />
-              ))}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="p-3.5 rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-2xs flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] truncate">
+                "¡Fascinada con la Patita Novia!"
+              </h3>
+              <span className="text-[10px] text-[#78716c] block">
+                Diego M. • Miraflores
+              </span>
             </div>
-            <p className="text-xs text-[#57534e] italic leading-relaxed">
-              "¡Mi novia quedó fascinada con la Patita Novia y las luces! El girasol es idéntico a las fotos y la cajita llegó perfecta y puntual a Miraflores."
-            </p>
-            <div className="pt-2 border-t border-dashed border-[#e7e2d7]/50 flex items-center justify-between text-xs">
-              <span className="font-bold text-[#1c1917]">Diego M.</span>
-              <span className="text-[#78716c]">Miraflores, Lima</span>
+            <div className="flex text-[#f59e0b] gap-0.5 shrink-0" title="5 de 5 estrellas">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-[#f59e0b] text-[#f59e0b]" />
+              ))}
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white border border-[#e7e2d7]/60 shadow-2xs space-y-3">
-            <div className="flex text-[#f59e0b] gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#f59e0b] text-[#f59e0b]" />
-              ))}
+          <div className="p-3.5 rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-2xs flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] truncate">
+                "Hermoso pack y atención 10/10"
+              </h3>
+              <span className="text-[10px] text-[#78716c] block">
+                Valeria C. • Surco
+              </span>
             </div>
-            <p className="text-xs text-[#57534e] italic leading-relaxed">
-              "El pack carnerita con el anillo giratorio es hermoso y súper delicado. La atención por WhatsApp fue muy amable y resolvieron mis dudas al instante."
-            </p>
-            <div className="pt-2 border-t border-dashed border-[#e7e2d7]/50 flex items-center justify-between text-xs">
-              <span className="font-bold text-[#1c1917]">Valeria C.</span>
-              <span className="text-[#78716c]">Surco, Lima</span>
+            <div className="flex text-[#f59e0b] gap-0.5 shrink-0" title="5 de 5 estrellas">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-[#f59e0b] text-[#f59e0b]" />
+              ))}
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white border border-[#e7e2d7]/60 shadow-2xs space-y-3">
-            <div className="flex text-[#f59e0b] gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#f59e0b] text-[#f59e0b]" />
-              ))}
+          <div className="p-3.5 rounded-2xl bg-white border border-[#e7e2d7]/70 shadow-2xs flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="font-headline text-xs sm:text-sm font-bold text-[#1c1917] truncate">
+                "Calidad y dedicatoria perfecta"
+              </h3>
+              <span className="text-[10px] text-[#78716c] block">
+                Carlos L. • San Borja
+              </span>
             </div>
-            <p className="text-xs text-[#57534e] italic leading-relaxed">
-              "La calidad del chenille aterciopelado es 10/10. Llegó impecable con la tarjeta de dedicatoria caligrafiada tal cual la pedí. Totalmente recomendado."
-            </p>
-            <div className="pt-2 border-t border-dashed border-[#e7e2d7]/50 flex items-center justify-between text-xs">
-              <span className="font-bold text-[#1c1917]">Carlos L.</span>
-              <span className="text-[#78716c]">San Borja, Lima</span>
+            <div className="flex text-[#f59e0b] gap-0.5 shrink-0" title="5 de 5 estrellas">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-[#f59e0b] text-[#f59e0b]" />
+              ))}
             </div>
           </div>
         </div>
