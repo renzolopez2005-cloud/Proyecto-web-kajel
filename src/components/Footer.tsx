@@ -18,20 +18,14 @@ import {
 } from 'lucide-react';
 
 interface FooterProps {
-  onScrollTo?: (id: string) => void;
+  onSelectScreen?: (screen: ActiveScreen) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
-  const handleScroll = (id: string) => {
-    if (onScrollTo) {
-      onScrollTo(id);
-    } else {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      } else if (id === 'top') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+export const Footer: React.FC<FooterProps> = () => {
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -50,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
               </span>
             </div>
             <p className="font-body text-xs leading-relaxed text-[#57534e]">
-              Detalles y ramos de flores eternas elaborados a mano con amor en Lima. Celebra la tradición de septiembre con un recuerdo imborrable.
+              Detalles y ramos de flores eternas elaborados a mano con amor en Lima. Celebra con un detalle imborrable que nunca se marchita.
             </p>
             <div className="flex items-center gap-2 pt-1">
               <a
@@ -83,50 +77,42 @@ export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
             </div>
           </div>
 
-          {/* Navigation Links */}
+          {/* Section Navigation Links */}
           <div className="space-y-2">
             <h4 className="font-headline text-xs font-bold uppercase tracking-wider text-[#1c1917]">
-              Secciones
+              Explorar la Página
             </h4>
             <ul className="space-y-1.5 text-xs">
               <li>
                 <button
-                  onClick={() => handleScroll('top')}
+                  onClick={() => scrollTo('catalogo')}
                   className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
-                  Inicio
+                  Colección de Ramos & Boxes
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('catalogo')}
+                  onClick={() => scrollTo('taller-artesanal')}
                   className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
-                  Catálogo Flores Amarillas
+                  Taller & Confección en Chenille
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('historia')}
+                  onClick={() => scrollTo('envios-lima')}
                   className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
-                  Nuestra Historia & El Significado
+                  Cobertura de Envíos en Lima
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('envios')}
+                  onClick={() => scrollTo('preguntas-frecuentes')}
                   className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
                 >
-                  Pedidos & Envíos Lima
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleScroll('faq')}
-                  className="hover:text-[#b45309] transition-colors text-left cursor-pointer"
-                >
-                  Preguntas Frecuentes
+                  Preguntas Frecuentes (FAQ)
                 </button>
               </li>
             </ul>

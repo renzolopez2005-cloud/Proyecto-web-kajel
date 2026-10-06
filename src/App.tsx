@@ -1,75 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Product, ColorPalette } from './types';
-import { PRODUCTS, WHATSAPP_PHONE } from './data/products';
+import React, { useState } from 'react';
+import { Product } from './types';
+import { WHATSAPP_PHONE } from './data/products';
 import { TopToolbar } from './components/TopToolbar';
 import { HomeScreen } from './components/HomeScreen';
-import { CatalogScreen } from './components/CatalogScreen';
-import { AboutScreen } from './components/AboutScreen';
-import { ContactScreen } from './components/ContactScreen';
-import { ProductDetailModal } from './components/ProductDetailModal';
+import { ProductDetailScreen } from './components/ProductDetailScreen';
 import { Footer } from './components/Footer';
 import { MessageCircle } from 'lucide-react';
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
 
-  // Color palette state persisted in localStorage
-  const [currentPalette, setCurrentPalette] = useState<ColorPalette>(() => {
-    try {
-      const saved = localStorage.getItem('kajel_palette');
-      const validPalettes: ColorPalette[] = [
-        'girasol', 
-        'botanico', 
-        'romance', 
-        'lavanda', 
-        'atardecer', 
-        'oceano', 
-        'terracota', 
-        'noche'
-      ];
-      if (saved && validPalettes.includes(saved as ColorPalette)) {
-        return saved as ColorPalette;
-      }
-    } catch {
-      // ignore
-    }
-    return 'girasol';
-  });
-
-  // Sync currentPalette with localStorage and root DOM element
-  useEffect(() => {
-    try {
-      localStorage.setItem('kajel_palette', currentPalette);
-    } catch {
-      // ignore
-    }
-    document.documentElement.setAttribute('data-palette', currentPalette);
-    document.body.setAttribute('data-palette', currentPalette);
-  }, [currentPalette]);
-
-  const handleOpenProductDetail = (product: Product) => {
-    setSelectedProduct(product);
-    setIsDetailOpen(true);
-  };
-
-  const handleCloseProductDetail = () => {
-    setIsDetailOpen(false);
-  };
-
-  const scrollToCatalog = () => {
+  const handleScrollToCatalog = () => {
     const el = document.getElementById('catalogo');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleScrollTo = (id: string) => {
-    if (id === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
@@ -77,58 +19,42 @@ export default function App() {
 
   return (
     <div
-      data-palette={currentPalette}
-      className="min-h-screen flex flex-col bg-[#fdfbf7] text-[#1c1917] selection:bg-[#f59e0b] selection:text-[#451a03] transition-colors duration-200"
+      data-palette="girasol"
+      className="min-h-screen flex flex-col bg-[#fdfbf7] text-[#1c1917] selection:bg-[#f59e0b] selection:text-[#451a03]"
     >
-      {/* Top Sticky Header: Brand, Color Palette Selector & Direct WhatsApp CTA */}
-      <TopToolbar
-        currentPalette={currentPalette}
-        onChangePalette={setCurrentPalette}
-        onNavigateCatalog={scrollToCatalog}
-      />
+      {/* 1. DISTRACTION-FREE LANDING HEADER (No nav links, no palette dropdown) */}
+      <TopToolbar onScrollToCatalog={handleScrollToCatalog} />
 
-      {/* Main Single Landing Page Content Flow */}
-      <main className="flex-1 space-y-12">
-        {/* Hero, Presale Ribbon, Countdown & Why Kajel */}
-        <HomeScreen
-          onSelectProduct={handleOpenProductDetail}
-          onNavigateCatalog={scrollToCatalog}
-        />
-
-        {/* Complete Catalog & Products Section */}
-        <section id="catalogo" className="scroll-mt-16">
-          <CatalogScreen
-            onSelectProduct={handleOpenProductDetail}
-          />
-        </section>
-
-        {/* Brand Lore, The Carnerita Story & Artisanal Craft */}
-        <section id="historia" className="scroll-mt-16">
-          <AboutScreen
-            onNavigateCatalog={scrollToCatalog}
-          />
-        </section>
-
-        {/* Lima District Delivery Calculator & FAQ Accordion */}
-        <section id="envios" className="scroll-mt-16">
-          <ContactScreen />
-        </section>
+      {/* 2. SINGLE VERTICAL SCROLL LANDING CONTENT */}
+      <main className="flex-1">
+        <HomeScreen onSelectProduct={(prod) => setSelectedProduct(prod)} />
       </main>
 
-      {/* Product Detail Modal (Opens when inspecting a product) */}
-      <ProductDetailModal
-        product={selectedProduct}
-        isOpen={isDetailOpen}
-        onClose={handleCloseProductDetail}
-      />
+      {/* 3. PRODUCT DETAILS MODAL (Opens in place, keeping the visitor on the landing page) */}
+      {selectedProduct && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-200"
+          onClick={() => setSelectedProduct(null)}
+        >
+          <div 
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white shadow-2xl my-auto animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ProductDetailScreen
+              product={selectedProduct}
+              onClose={() => setSelectedProduct(null)}
+            />
+          </div>
+        </div>
+      )}
 
-      {/* Floating Action Button: Quick WhatsApp Order Consultation */}
+      {/* 4. FLOATING CONVERSION ACTION BUTTON (WhatsApp Only - Zero Cart Clutter) */}
       <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 pointer-events-auto">
         <a
-          href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('¡Hola Kajel! Deseo consultar por disponibilidad de flores amarillas.')}`}
+          href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('¡Hola Kajel! Deseo consultar por disponibilidad de ramos de flores amarillas para Lima.')}`}
           target="_blank"
           rel="noreferrer"
-          className="group flex items-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1caa4d] text-white rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+          className="group flex items-center gap-2.5 px-4.5 py-3.5 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da850] text-white rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95"
           title="Chatear por WhatsApp"
         >
           <MessageCircle className="w-6 h-6 fill-white" />
@@ -138,8 +64,8 @@ export default function App() {
         </a>
       </div>
 
-      {/* Landing Page Footer */}
-      <Footer onScrollTo={handleScrollTo} />
+      {/* 5. MINIMALIST FOOTER */}
+      <Footer />
     </div>
   );
 }

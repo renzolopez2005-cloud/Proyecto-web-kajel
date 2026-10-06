@@ -1,13 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { Product } from '../types';
-import { PRODUCTS, WHATSAPP_PHONE } from '../data/products';
+import { PRODUCTS } from '../data/products';
 import { createProductWhatsAppLink } from '../utils/whatsapp';
 import { 
   Search, 
   Sparkles, 
   MessageCircle, 
   Star, 
-  Check, 
+  Check,
   Gift, 
   Flame, 
   SlidersHorizontal 
@@ -15,6 +15,7 @@ import {
 
 interface CatalogScreenProps {
   onSelectProduct: (product: Product) => void;
+  onAddToCart?: (product: Product) => void;
 }
 
 export const CatalogScreen: React.FC<CatalogScreenProps> = ({
@@ -56,22 +57,22 @@ export const CatalogScreen: React.FC<CatalogScreenProps> = ({
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fef08a] text-[#451a03] text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-            <span>Colección Preventa Flores Amarillas — Septiembre</span>
+            <span>Colección Exclusiva de Flores Amarillas Hechas a Mano</span>
           </div>
-          <h1 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
-            Catálogo de Ramos & Gift Boxes Eternos
-          </h1>
+          <h2 className="font-headline text-2xl md:text-3xl font-bold text-[#1c1917]">
+            Ramos & Gift Boxes Eternos Listos para Regalar
+          </h2>
           <p className="font-body text-xs md:text-sm text-[#57534e] max-w-2xl leading-relaxed">
-            Elaborados artesanalmente en limpiapipas de chenille de alta densidad y follaje fino. Incluyen luces de hada cálidas y mini bombones Bon o bon por preventa.
+            Elaborados artesanalmente en chenille aterciopelado de alta densidad. Todos los packs incluyen luces de hada cálidas, tarjeta para dedicatoria caligrafiada y empaque fino para regalo en Lima.
           </p>
         </div>
 
         <div className="bg-white p-3.5 rounded-xl border border-[#e7e2d7]/30 shadow-xs flex-shrink-0">
-          <span className="text-[11px] text-[#78716c] block font-semibold uppercase">Beneficio Preventa:</span>
+          <span className="text-[11px] text-[#78716c] block font-semibold uppercase">Incluido en tu pedido:</span>
           <span className="font-headline text-sm font-bold text-[#b45309] block">
-            🎁 Luces Hada + Bombones Gratis
+            🎁 Luces Hada + Dedicatoria Fina
           </span>
-          <span className="text-[10px] text-[#57534e]">Ahorro de hasta S/ 8.00 por pack</span>
+          <span className="text-[10px] text-[#57534e]">Empaque protector para entrega en Lima</span>
         </div>
       </div>
 
@@ -250,7 +251,7 @@ export const CatalogScreen: React.FC<CatalogScreenProps> = ({
                         Normal: S/ {product.normalPrice.toFixed(2)}
                       </span>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs text-[#b45309] font-bold">PREVENTA:</span>
+                        <span className="text-xs text-[#b45309] font-bold">PRECIO:</span>
                         <span className="font-headline text-xl text-[#b45309] font-bold">
                           S/ {product.price.toFixed(2)}
                         </span>
@@ -258,24 +259,26 @@ export const CatalogScreen: React.FC<CatalogScreenProps> = ({
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => onSelectProduct(product)}
-                      className="w-full py-2.5 bg-[#fffbeb] hover:bg-[#fef3c7] text-[#b45309] border border-[#e7e2d7] text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-2xs cursor-pointer text-center"
-                    >
-                      <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
-                      <span>Ver Detalles & Personalizar</span>
-                    </button>
-
+                  {/* Single Unified High-Converting CTA Button */}
+                  <div className="space-y-2 pt-1">
                     <a
                       href={whatsAppLink}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                      className="w-full py-3 bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da850] text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs hover:shadow-md transition-all active:scale-[0.98]"
                     >
-                      <MessageCircle className="w-3.5 h-3.5 fill-white" />
-                      <span>Pedir por WhatsApp</span>
+                      <MessageCircle className="w-4 h-4 fill-white" />
+                      <span>Pedir por WhatsApp (S/ {product.price.toFixed(2)})</span>
                     </a>
+
+                    <button
+                      type="button"
+                      onClick={() => onSelectProduct(product)}
+                      className="w-full py-2 bg-[#fffbeb] hover:bg-[#fef3c7] text-[#b45309] rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors border border-[#e7e2d7]/60 cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-[#b45309]" />
+                      <span>Ver fotos y dedicatoria</span>
+                    </button>
                   </div>
                 </div>
               </div>

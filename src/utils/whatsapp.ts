@@ -4,28 +4,21 @@ import { WHATSAPP_PHONE } from '../data/products';
 export function createProductWhatsAppLink(
   product: Product,
   variant?: ProductVariant,
-  customDedication?: string,
-  quantity: number = 1
+  customDedication?: string
 ): string {
   const variantText = variant ? `\n• *Versión seleccionada:* ${variant.name}` : '';
-  const qtyText = quantity > 1 ? `\n• *Cantidad:* ${quantity} unidades` : '';
-  const unitPrice = product.price + (variant?.priceDiff || 0);
-  const totalPrice = unitPrice * quantity;
-  const priceText = quantity > 1 
-    ? `S/ ${totalPrice.toFixed(2)} (${quantity} x S/ ${unitPrice.toFixed(2)})`
-    : `S/ ${unitPrice.toFixed(2)} (Antes S/ ${product.normalPrice.toFixed(2)})`;
   const dedicationText = customDedication?.trim()
     ? `\n• *Dedicatoria en tarjeta:* "${customDedication.trim()}"`
     : '';
 
   const message = `🌻 *¡Hola Kajel Flores Amarillas!* 💛
-Quiero reservar mi pedido de preventa:
+Deseo realizar un pedido:
 
-📌 *Producto:* ${product.name} (${product.subtitle})${variantText}${qtyText}
-💰 *Total Preventa:* ${priceText}${dedicationText}
-🎁 *Incluye:* Preventa con Luces Hada & Bombones
+📌 *Producto:* ${product.name} (${product.subtitle})
+💰 *Precio:* S/ ${product.price.toFixed(2)}${variantText}${dedicationText}
+🎁 *Incluye:* Empaque para regalo, tarjeta de dedicatoria & luces hada
 
-¿Me podrían confirmar disponibilidad y tiempos de entrega para Lima? ¡Muchas gracias! ✨`;
+¿Me podrían confirmar disponibilidad y fecha de entrega para Lima? ¡Muchas gracias! ✨`;
 
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
 }
